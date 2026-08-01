@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Caterpillar — Beta Metrics</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --surface-0: #121311;
+    --surface-1: #1a1a19;
+    --surface-2: #232421;
+    --line:      #33352f;
+    --text-1:    #ffffff;
+    --text-2:    #c3c2b7;
+    --text-3:    #8b8a80;
+    /* Both from the validated categorical set, stepped for this dark
+       surface. Slot 3 (aqua) carries magnitude; slot 1 (blue) carries the
+       daily-active series. Validated together: CVD ΔE 19.6, normal 20.9,
+       both ≥3:1 on #1a1a19. */
+    --accent:    #199e70;
+    --accent-2:  #3987e5;
+    --warn:      #c98500;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0 20px 80px;
+    background: var(--surface-0); color: var(--text-1);
+    font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  header { padding: 40px 0 8px; }
+  h1 { margin: 0 0 4px; font-size: 27px; letter-spacing: -0.4px; }
+  h2 { font-size: 17px; margin: 38px 0 12px; }
+  .sub { color: var(--text-2); margin: 0; }
+  .controls { display: flex; gap: 8px; align-items: center; margin: 20px 0 4px; flex-wrap: wrap; }
+  button {
+    background: var(--surface-2); color: var(--text-1); border: 1px solid var(--line);
+    border-radius: 9px; padding: 7px 13px; font-size: 13px; cursor: pointer;
+  }
+  button[aria-pressed="true"] { background: var(--accent); color: #06120d; border-color: var(--accent); font-weight: 600; }
+  .status { color: var(--text-3); font-size: 13px; }
+
+  .tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .tile { background: var(--surface-1); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  .tile .n { font-size: 30px; font-weight: 700; letter-spacing: -0.5px; }
+  .tile .k { color: var(--text-2); font-size: 13px; margin-top: 2px; }
+  .tile .d { color: var(--text-3); font-size: 12px; margin-top: 7px; }
+
+  .card { background: var(--surface-1); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .scroll { overflow-x: auto; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 560px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--text-2); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td .why { color: var(--text-3); font-size: 12.5px; display: block; margin-top: 2px; }
+
+  /* Horizontal magnitude bars. One hue: the row label carries identity, so
+     colour would be decoration — and eight cycled hues would be worse than
+     decoration. 4px rounded data-end, anchored at the baseline. */
+  .bars { display: grid; gap: 9px; }
+  .bar-row { display: grid; grid-template-columns: minmax(120px, 190px) 1fr auto; gap: 12px; align-items: center; }
+  .bar-label { color: var(--text-2); font-size: 13.5px; }
+  .bar-track { background: var(--surface-2); border-radius: 4px; height: 20px; position: relative; }
+  .bar-fill { background: var(--accent); height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
+  .bar-val { font-variant-numeric: tabular-nums; font-size: 13.5px; color: var(--text-1); }
+
+  /* Daily active — bars, because the x values are discrete days. */
+  .spark { display: flex; align-items: flex-end; gap: 2px; height: 130px; }
+  .spark div { background: var(--accent-2); border-radius: 3px 3px 0 0; flex: 1 1 0; min-height: 2px; }
+  .spark-axis { display: flex; justify-content: space-between; color: var(--text-3); font-size: 11.5px; margin-top: 7px; }
+
+  .empty { color: var(--text-3); font-size: 14px; padding: 6px 0; }
+  .note { color: var(--text-3); font-size: 13px; }
+  code { background: var(--surface-2); padding: 1px 5px; border-radius: 5px; font-size: 12.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Caterpillar — Beta Metrics</h1>
+  <p class="sub">Anonymous usage from beta builds. No names, no emails, no food you logged.</p>
+</header>
+
+<div class="controls">
+  <span class="status">Window:</span>
+  <button data-days="7"  aria-pressed="false">7 days</button>
+  <button data-days="30" aria-pressed="true">30 days</button>
+  <button data-days="90" aria-pressed="false">90 days</button>
+  <button id="refresh">Refresh</button>
+  <span class="status" id="status">Loading…</span>
+</div>
+
+<h2>At a glance</h2>
+<div class="tiles" id="tiles"></div>
+
+<h2>Daily active installs</h2>
+<div class="card">
+  <div class="spark" id="spark" role="img" aria-label="Daily active installs"></div>
+  <div class="spark-axis"><span id="spark-from"></span><span id="spark-to"></span></div>
+  <p class="note" style="margin:14px 0 0">
+    How many distinct installs did <em>anything</em> that day. This is the number
+    that tells you whether testers are actually returning — everything else is
+    detail by comparison.
+  </p>
+</div>
+
+<h2>How food gets logged</h2>
+<div class="card"><div class="bars" id="sources"></div>
+  <p class="note" style="margin:14px 0 0">
+    Which route people take to log a meal. If one dominates, that's the path
+    worth polishing; if a route you built is near zero, it's either hard to
+    find or not wanted.
+  </p>
+</div>
+
+<h2>Which locked door people hit</h2>
+<div class="card"><div class="bars" id="paywall"></div>
+  <p class="note" style="margin:14px 0 0">
+    Every time the paywall appeared, and the reason given. The top row is your
+    strongest upgrade pitch — it's the feature people reach for and can't have.
+  </p>
+</div>
+
+<h2>Every tracked event</h2>
+<div class="card scroll">
+  <table>
+    <thead><tr>
+      <th>Event</th><th>What it means</th>
+      <th class="num">Times</th><th class="num">Installs</th>
+    </tr></thead>
+    <tbody id="events"></tbody>
+  </table>
+</div>
+
+<h2>What is and isn't collected</h2>
+<div class="card">
+  <p style="margin-top:0">
+    Events are keyed to a random UUID generated once per install. It is
+    <strong>not</strong> the Caterpillar account, the Apple ID, or the device
+    id — deleting the app ends that identity permanently, and nothing here can
+    be traced back to a person.
+  </p>
+  <p>
+    <strong>Never collected:</strong> search queries, food names, weights,
+    photos, emails, or anything else typed or captured. Event properties carry
+    only small fixed values — which scan route, which paywall reason — and the
+    server clamps them again on arrival. Rows older than 180 days are deleted.
+  </p>
+  <p style="margin-bottom:0" class="note">
+    Testers can switch this off in the app; off means nothing is queued or sent.
+    The table has row-level security with no policies, so the key shipped in the
+    app can neither read nor write it — this page reads aggregates through a
+    server function that never returns a single row.
+  </p>
+</div>
+
+</div>
+
+<script>
+const ENDPOINT = "https://jkxxqojfualdmsvyaprz.supabase.co/functions/v1/analytics";
+const ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpreHhxb2pmdWFsZG1zdnlhcHJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0MDg2NDcsImV4cCI6MjA5MTk4NDY0N30.xN4-oo8YagLnrOjD0IhliEN_2GdYYTLhpQzHCkrVnU0";
+
+// Plain-English meaning for every event. This is the whole point of the page:
+// a metric you can't interpret is worse than no metric, because you'll act on
+// it anyway.
+const MEANING = {
+  app_open:             "App brought to the foreground. The denominator for almost everything else.",
+  onboarding_started:   "Someone opened the app for the very first time.",
+  onboarding_step:      "Reached a particular onboarding screen. Compare counts to find where people drop out.",
+  onboarding_complete:  "Finished onboarding and landed in the app. Started minus completed is your first-run loss.",
+  meal_logged:          "A meal or drink was logged, by any route. The core action — if this stalls, nothing else matters.",
+  hydration_logged:     "A drink was added to the dew drop.",
+  weight_logged:        "A weigh-in was recorded.",
+  day_wrapped:          "Tapped Wrap Up Today. The ritual that closes a day — a good proxy for genuine engagement rather than a stray tap.",
+  search_performed:     "Searched the food database. High counts with low meal_logged means search isn't finding things.",
+  barcode_scanned:      "A barcode or product code was scanned successfully.",
+  ai_meal_scan:         "Photographed a meal for AI recognition. Costs roughly 0.2c each.",
+  menu_scan:            "Photographed a restaurant menu. Your most expensive AI call at about 0.8c.",
+  label_scan:           "Photographed a nutrition panel. Free and uncapped by design, so watch for anyone hammering it.",
+  ai_search:            "Asked the AI to find a food the database missed.",
+  voice_search:         "Described food by voice.",
+  recipe_import:        "Imported a recipe from a URL. Pro only.",
+  favourite_saved:      "Starred a food for reuse. A signal someone is settling into habits.",
+  feature_opened:       "Opened a named screen. Tells you what gets explored versus ignored.",
+  paywall_shown:        "The paywall appeared, with the reason that triggered it.",
+  paywall_purchased:    "Someone subscribed. Against paywall_shown, this is your conversion rate.",
+  achievement_unlocked: "Earned a puzzle piece or butterfly.",
+  reminder_opened:      "Opened the app from a notification. Tells you whether the nudges actually work."
+};
+
+const LABELS = {
+  manual: "Manual", manual_entry: "Typed in by hand", barcode: "Barcode scan",
+  favourite: "Favourites", ai_scan: "AI meal scan", menu_scan: "Menu scan",
+  label_scan: "Nutrition label", hydration: "Drink log"
+};
+
+const fmt = n => (n ?? 0).toLocaleString();
+const pretty = k => LABELS[k] || k.replace(/_/g, " ").replace(/^./, c => c.toUpperCase());
+let days = 30;
+
+function bars(el, obj, emptyMsg) {
+  const entries = Object.entries(obj || {}).sort((a, b) => b[1] - a[1]);
+  if (!entries.length) { el.innerHTML = `<p class="empty">${emptyMsg}</p>`; return; }
+  const max = entries[0][1] || 1;
+  el.innerHTML = entries.map(([k, v]) => `
+    <div class="bar-row">
+      <span class="bar-label">${pretty(k)}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(2, v / max * 100)}%"
+        title="${pretty(k)}: ${fmt(v)}"></div></div>
+      <span class="bar-val">${fmt(v)}</span>
+    </div>`).join("");
+}
+
+function render(d) {
+  const opens = d.event_counts?.app_open ?? 0;
+  const meals = d.event_counts?.meal_logged ?? 0;
+  const shown = d.event_counts?.paywall_shown ?? 0;
+  const bought = d.event_counts?.paywall_purchased ?? 0;
+  const aiCalls = (d.event_counts?.ai_meal_scan ?? 0) + (d.event_counts?.menu_scan ?? 0)
+                + (d.event_counts?.label_scan ?? 0) + (d.event_counts?.ai_search ?? 0);
+  // Same per-call figures used in the cost model: meal 0.20c, menu 0.80c,
+  // label 0.19c, search 0.09c.
+  const cost = (d.event_counts?.ai_meal_scan ?? 0) * 0.00197
+             + (d.event_counts?.menu_scan   ?? 0) * 0.00804
+             + (d.event_counts?.label_scan  ?? 0) * 0.00187
+             + (d.event_counts?.ai_search   ?? 0) * 0.00090;
+
+  const tile = (n, k, note) =>
+    `<div class="tile"><div class="n">${n}</div><div class="k">${k}</div><div class="d">${note}</div></div>`;
+
+  document.getElementById("tiles").innerHTML = [
+    tile(fmt(d.total_installs), "Installs seen", `Distinct installs active in the last ${d.window_days} days.`),
+    tile(fmt(d.pro_installs), "With Pro", "Installs that reported an active Pro entitlement."),
+    tile(fmt(meals), "Meals logged", opens ? `${(meals / opens).toFixed(1)} per app open.` : "The core action."),
+    tile(fmt(aiCalls), "AI calls", `Estimated spend US$${cost.toFixed(2)} over the window.`),
+    tile(shown ? `${(bought / shown * 100).toFixed(1)}%` : "—", "Paywall conversion",
+         shown ? `${fmt(bought)} of ${fmt(shown)} paywall views.` : "No paywall views yet."),
+    tile(fmt(d.total_events), "Events", "Everything recorded in the window.")
+  ].join("");
+
+  const daily = Object.entries(d.daily_active || {});
+  const spark = document.getElementById("spark");
+  if (!daily.length) {
+    spark.innerHTML = '<p class="empty">No activity yet.</p>';
+    document.getElementById("spark-from").textContent = "";
+    document.getElementById("spark-to").textContent = "";
+  } else {
+    const peak = Math.max(...daily.map(x => x[1])) || 1;
+    spark.innerHTML = daily.map(([day, n]) =>
+      `<div style="height:${Math.max(2, n / peak * 100)}%" title="${day}: ${n} active"></div>`).join("");
+    document.getElementById("spark-from").textContent = daily[0][0];
+    document.getElementById("spark-to").textContent = daily[daily.length - 1][0];
+  }
+
+  bars(document.getElementById("sources"), d.meal_sources, "No meals logged yet.");
+  bars(document.getElementById("paywall"), d.paywall_reasons, "The paywall hasn't been shown yet.");
+
+  const rows = Object.keys(MEANING).map(ev => ({
+    ev, count: d.event_counts?.[ev] ?? 0, installs: d.installs_per_event?.[ev] ?? 0
+  })).sort((a, b) => b.count - a.count);
+  document.getElementById("events").innerHTML = rows.map(r => `
+    <tr>
+      <td><code>${r.ev}</code></td>
+      <td><span class="why">${MEANING[r.ev]}</span></td>
+      <td class="num">${fmt(r.count)}</td>
+      <td class="num">${fmt(r.installs)}</td>
+    </tr>`).join("");
+}
+
+async function load() {
+  const status = document.getElementById("status");
+  status.textContent = "Loading…";
+  try {
+    const key = new URLSearchParams(location.search).get("key");
+    const res = await fetch(ENDPOINT + (key ? `?key=${encodeURIComponent(key)}` : ""), {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${ANON}`, "apikey": ANON },
+      body: JSON.stringify({ task: "metrics", days })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
+    render(data);
+    status.textContent = "Updated " + new Date(data.generated_at).toLocaleString();
+  } catch (err) {
+    status.textContent = "Couldn't load: " + err.message;
+  }
+}
+
+document.querySelectorAll("button[data-days]").forEach(b => {
+  b.addEventListener("click", () => {
+    days = Number(b.dataset.days);
+    document.querySelectorAll("button[data-days]").forEach(o =>
+      o.setAttribute("aria-pressed", String(o === b)));
+    load();
+  });
+});
+document.getElementById("refresh").addEventListener("click", load);
+load();
+</script>
+</body>
+</html>
