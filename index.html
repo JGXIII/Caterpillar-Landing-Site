@@ -107,7 +107,7 @@
     number keeps you opening the app. Caterpillar would rather be right.</p>
 
     <div class="split reveal">
-      <div class="art"><img src="assets/caterpillar_head_full.png" alt="The caterpillar looking full" width="132" height="150"></div>
+      <div class="art wide"><img src="assets/caterpillar_full_eating.png" alt="The caterpillar eating" width="324" height="134"></div>
       <div>
         <h3>Cooked, not dry</h3>
         <p>Pasta, rice and oats roughly triple in weight when you cook them. Log
@@ -118,7 +118,7 @@
     </div>
 
     <div class="split flip reveal">
-      <div class="art"><img src="assets/caterpillar_head_happy.png" alt="The caterpillar, content" width="132" height="150"></div>
+      <div class="art wide"><img src="assets/caterpillar_full.png" alt="The caterpillar, content" width="324" height="134"></div>
       <div>
         <h3>Hydration that doesn't flatter you</h3>
         <p>A dew drop fills with everything you drink, coloured by what it
@@ -129,7 +129,7 @@
     </div>
 
     <div class="split reveal">
-      <div class="art"><img src="assets/caterpillar_head_eating.png" alt="The caterpillar eating" width="132" height="150"></div>
+      <div class="art"><img src="assets/icon_barcodescan.png" alt="" width="128" height="128"></div>
       <div>
         <h3>Australian food, first</h3>
         <p>Built on FSANZ food composition data, because Australian mince really
@@ -220,9 +220,6 @@
 
   var SEGMENTS = 7;                       // 7 of 10 — a good day, not a full one
   var FULL = 10;                          // a full bar, for sizing
-  var FRAMES = ["assets/caterpillar_walk_1.png",
-                "assets/caterpillar_walk_2.png",
-                "assets/caterpillar_walk_3.png"];
   var segW = 0.882, overlap = segW * 0.45, step = segW - overlap;
 
   // Segment height derived from the MEASURED width, so a full 10-segment body
@@ -254,29 +251,32 @@
   window.addEventListener("resize", size, { passive: true });
   window.addEventListener("load", size);
 
-  for (var i = 0; i < SEGMENTS; i++) {
-    var s = document.createElement("img");
-    s.className = "seg";
-    // Cycling the three walk frames across the body gives the ripple the app
-    // has, without animating each segment's src.
-    s.src = FRAMES[i % FRAMES.length];
-    s.alt = "";
-    s.style.left = "calc(var(--seg) * " + (i * step).toFixed(4) + ")";
-    s.style.zIndex = String(i);
-    s.style.animationDelay = (i * 0.09).toFixed(2) + "s, " +
-                             (i * 0.09).toFixed(2) + "s";
-    track.appendChild(s);
+  // The bounce travels tail-to-head at the app's own 0.045s per segment, so
+  // the body ripples rather than bobbing as one lump. The sprite cycle stays
+  // in phase across every segment — in the app all segments show the same
+  // walk frame at any instant; it's the BOUNCE that's staggered, not the legs.
+  var WAVE = 0.045;
+
+  function part(cls, leftMul, i) {
+    var el = document.createElement("span");
+    el.className = cls;
+    el.style.left = "calc(var(--seg) * " + leftMul.toFixed(4) + ")";
+    el.style.animationDelay = (i * 0.055).toFixed(3) + "s";   // grow-in only
+    var art = document.createElement("i");
+    // walk delay 0 = every segment in the same stride; bob delay = the wave.
+    art.style.animationDelay = cls === "seg"
+      ? "0s, " + (i * WAVE).toFixed(3) + "s"
+      : (i * WAVE).toFixed(3) + "s";
+    el.appendChild(art);
+    return el;
   }
 
-  var head = document.createElement("img");
-  head.className = "head";
-  head.src = "assets/caterpillar_head_happy.png";
-  head.alt = "";
-  head.style.left = "calc(var(--seg) * " +
-                    (SEGMENTS * step - overlap * 0.3).toFixed(4) + ")";
-  head.style.animationDelay = (SEGMENTS * 0.09).toFixed(2) + "s, " +
-                              (SEGMENTS * 0.09).toFixed(2) + "s";
-  track.appendChild(head);
+  for (var i = 0; i < SEGMENTS; i++) {
+    var s = part("seg", i * step, i);
+    s.style.zIndex = String(i);
+    track.appendChild(s);
+  }
+  track.appendChild(part("head", SEGMENTS * step - overlap * 0.3, SEGMENTS));
 })();
 
 // ── Scroll reveal ────────────────────────────────────────────────────────

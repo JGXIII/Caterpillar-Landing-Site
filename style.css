@@ -198,26 +198,59 @@ body > nav .cta:hover { background: var(--amber-deep); }
 .growth-track {
   position: relative; height: calc(var(--seg) * 1.55);
 }
-/* Segments overlap by 45%, exactly as the in-app growth bar does, so the body
-   reads as one creature rather than a row of beads. */
+
+/* ── THE WALK ──
+   It really walks, the same way the app's does. The app cycles the three walk
+   frames every 0.18s — the legs are in a different stride in each — and runs a
+   bounce WAVE down the body, each segment 0.045s behind the one before it, so
+   the motion travels from tail to head instead of the whole animal bobbing as
+   one lump. An earlier version here did only the bob, which is why it read as
+   a row of beads jiggling rather than a creature moving.
+
+   Frames come from one sprite strip driven by steps(3), so there is no JS
+   timer and no per-frame image swap. Segments overlap by 45%, exactly as the
+   in-app bar does.
+
+   Two elements per segment because sprout and bob both want `transform`: the
+   outer does the one-shot grow-in, the inner does the endless walk. */
 .growth-track .seg, .growth-track .head {
   position: absolute; bottom: 0;
   width: calc(var(--seg) * 0.882); height: var(--seg);
   opacity: 0;
-  animation: sprout .55s cubic-bezier(.2,1.5,.4,1) forwards,
-             bob 1.05s ease-in-out infinite;
+  animation: sprout .5s cubic-bezier(.2,1.5,.4,1) forwards;
 }
 .growth-track .head {
   width: calc(var(--seg) * 1.103); height: calc(var(--seg) * 1.25);
   bottom: calc(var(--seg) * 0.14); z-index: 20;
 }
+.growth-track .seg > i, .growth-track .head > i {
+  display: block; width: 100%; height: 100%;
+  background-repeat: no-repeat;
+  animation: bob .54s ease-in-out infinite;
+}
+.growth-track .seg > i {
+  background-image: url("assets/caterpillar_walk_sprite.png");
+  background-size: 300% 100%;             /* three frames */
+  animation: walk .54s steps(3) infinite,
+             bob  .54s ease-in-out infinite;
+}
+.growth-track .head > i {
+  background-image: url("assets/caterpillar_head_happy.png");
+  background-size: 100% 100%;
+}
 @keyframes sprout {
   from { opacity: 0; transform: translateY(9px) scale(.72); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
+/* 0% shows frame 1, 50% frame 2, 100% frame 3 — steps(3) over 0→150% lands
+   on exactly those three and holds each for a third of the cycle. */
+@keyframes walk {
+  from { background-position-x: 0%; }
+  to   { background-position-x: 150%; }
+}
 @keyframes bob {
-  0%, 100% { margin-bottom: 0; }
-  50%      { margin-bottom: 4px; }
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(calc(var(--seg) * -0.07)); }
 }
 .growth-ground {
   height: 3px; border-radius: 3px; margin-top: 6px;
@@ -279,6 +312,9 @@ section > .wrap > h2 { max-width: 20ch; }
   border: 1px solid var(--line);
 }
 .split .art img { width: clamp(88px, 15vw, 132px); height: auto; }
+/* The assembled caterpillar is ~2.4:1, so it needs the full panel width — at
+   the square icon size it came out as a thumbnail with the head unreadable. */
+.split .art.wide img { width: min(100%, 340px); }
 .split.flip .art { order: 2; }
 @media (max-width: 760px) { .split.flip .art { order: 0; } }
 
@@ -404,6 +440,11 @@ footer .links a:hover { color: var(--link); text-decoration: underline; }
     transition-duration: .001ms !important;
   }
   .growth-track .seg, .growth-track .head { opacity: 1; transform: none; }
+  /* Still show a walk FRAME, just a still one — with the sprite animation
+     killed the default background-position leaves frame 1, which is the
+     legs-together pose, so the creature reads as standing rather than
+     mid-stride. */
+  .growth-track .seg > i { background-position-x: 0%; }
   .reveal { opacity: 1; transform: none; }
   .card:hover, .btn:hover { transform: none; }
 }
