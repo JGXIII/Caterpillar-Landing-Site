@@ -5,115 +5,164 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Caterpillar — Terms of Service</title>
 <meta name="description" content="Terms of Service for Caterpillar Calorie Tracker.">
+<meta name="theme-color" content="#2e7d32">
+<link rel="icon" href="assets/appicon.png">
+<link rel="apple-touch-icon" href="assets/appicon-180.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
-  <a class="brand" href="index.html">🐛 Caterpillar</a>
-  <a href="how-it-works.html">How it works</a>
-  <a href="faq.html">FAQ</a>
-  <a class="cta" href="index.html#download">Get the app</a>
+  <a class="brand" href="index.html">
+    <img src="assets/appicon.png" alt="" width="30" height="30">Caterpillar
+  </a>
+  <a class="hide-sm" href="how-it-works.html">How it works</a>
+  <a class="hide-sm" href="faq.html">FAQ</a>
+  <a class="cta" href="index.html#get">Get the app</a>
 </nav>
 
 <section class="legal">
   <h1>Terms of Service</h1>
-  <p class="updated">Effective 20 July 2026</p>
+  <p class="updated">Last updated 4 August 2026</p>
 
-  <h2>1. Who we are</h2>
+  <div class="summary">
+    <p><strong>The short version.</strong> Caterpillar gives you estimates, not
+    medical advice. Look after your account, don't abuse the shared service, and
+    understand that food data you contribute may help other users. You can leave
+    and take your data with you at any time.</p>
+  </div>
+
+  <nav class="toc" aria-label="Sections">
+    <a href="#t1">1. Who we are</a>
+    <a href="#t2">2. What Caterpillar is — and isn't</a>
+    <a href="#t3">3. Your account</a>
+    <a href="#t4">4. Subscriptions</a>
+    <a href="#t5">5. Fair use of AI features</a>
+    <a href="#t6">6. Acceptable use</a>
+    <a href="#t7">7. Community food data</a>
+    <a href="#t8">8. Importing your data</a>
+    <a href="#t9">9. Intellectual property</a>
+    <a href="#t10">10. Disclaimers and liability</a>
+    <a href="#t11">11. Changes and termination</a>
+    <a href="#t12">12. Governing law</a>
+    <a href="#t13">13. Contact</a>
+  </nav>
+
+  <h2 id="t1">1. Who we are</h2>
   <p>Caterpillar Calorie Tracker ("Caterpillar", "the app", "we") is an iOS
   application for tracking food, hydration and related wellbeing habits,
   operated from Australia. By downloading or using the app you agree to these
   terms.</p>
 
-  <h2>2. What Caterpillar is — and isn't</h2>
+  <h2 id="t2">2. What Caterpillar is — and isn't</h2>
   <p>Caterpillar provides <strong>estimates</strong> of calories, macronutrients,
-  portion sizes and hydration, generated from food databases, barcode data,
-  user input and AI analysis of photos. Estimates can be wrong. The app is a
+  portion sizes and hydration, generated from food databases, barcode data, user
+  input and AI analysis of photos. Estimates can be wrong. The app is a
   general-wellbeing tool, <strong>not a medical device</strong>, and nothing in
-  it constitutes medical, dietetic or other professional health advice.
-  Consult a qualified professional before making significant dietary changes,
-  particularly if you are pregnant, have a medical condition, or have a
-  history of disordered eating. Caterpillar is not intended for users under
-  16.</p>
+  it constitutes medical, dietetic or other professional health advice. Consult
+  a qualified professional before making significant dietary changes,
+  particularly if you are pregnant, have a medical condition, or have a history
+  of disordered eating. Caterpillar is not intended for users under 16.</p>
 
-  <h2>3. Your account</h2>
+  <h2 id="t3">3. Your account</h2>
   <ul>
-    <li>Caterpillar requires an account, created with Sign in with Apple, so
-    that your history, streaks and achievements are tied to you rather than
-    to a single device and survive changing or losing a phone.</li>
-    <li>You're responsible for the security of your Apple ID; we never see
-    your password.</li>
+    <li>Caterpillar uses an account so that your history, streaks and
+    achievements are tied to you rather than to a single device, and survive
+    changing or losing a phone. You can create one with Sign in with Apple, with
+    Google, or with an email address and password.</li>
+    <li>You are responsible for the security of whichever credentials you use.
+    We never see your Apple or Google password. If you use an email password, it
+    is stored only in hashed form by our authentication provider.</li>
     <li>You must be 16 or older to create an account.</li>
-    <li>You may delete your account in-app at any time (Nest → Delete
-    Account). Deletion is processed within 48 hours and permanently removes
-    your cloud data.</li>
+    <li>You may delete your account in-app at any time (Nest → Delete Account).
+    Deletion is processed within 48 hours and permanently removes your cloud
+    data. You can export your data to CSV first.</li>
   </ul>
 
-  <h2>4. Subscriptions</h2>
-  <p>A paid "Pro" tier may be offered via Apple's App Store in-app purchase
-  system. Pricing, billing, renewal and cancellation are handled by Apple
-  under their terms. Features included in Pro will be described at the point
-  of purchase and may change over time. If Pro lapses, Pro-only data services
-  (such as meal-photo cloud backup) may stop and associated cloud content may
-  be scheduled for deletion after notice.</p>
+  <h2 id="t4">4. Subscriptions</h2>
+  <p>Core tracking is free. A paid "Pro" tier is offered through Apple's App
+  Store in-app purchase system on yearly, monthly and weekly terms. Pricing,
+  billing, renewal and cancellation are handled by Apple under their terms, and
+  subscriptions renew automatically until cancelled in your Apple account
+  settings. Features included in Pro are described at the point of purchase and
+  may change over time. If Pro lapses, Pro-only data services may stop and
+  associated cloud content may be scheduled for deletion after notice.</p>
 
-  <h2>5. Acceptable use</h2>
-  <p>Don't attempt to disrupt the service, probe or bypass its security,
-  scrape or bulk-extract its databases, reverse engineer the app except as
-  the law permits, or submit unlawful or deliberately false content through
-  community features (such as food submissions).</p>
+  <h2 id="t5">5. Fair use of AI features</h2>
+  <p>AI scanning and AI search run on a shared, metered service that costs us
+  money per request. Usage is therefore subject to per-device limits on the
+  number of requests per hour and per day. These limits apply to all users
+  including Pro subscribers, are set well above ordinary personal use, and may
+  be adjusted. Attempting to circumvent them — for example by automating
+  requests or resetting counters — is a breach of these terms.</p>
 
-  <h2>6. Community food data</h2>
-  <p>When you submit or correct food data — including nutrition-label scans
-  that are validated and added to Caterpillar's shared verified-food
-  database — you grant us a perpetual, royalty-free licence to use, edit and
-  distribute that contribution within the service (it may, after review, be
-  shown to other users). Submissions must not contain personal information.</p>
+  <h2 id="t6">6. Acceptable use</h2>
+  <p>Don't attempt to disrupt the service, probe or bypass its security, scrape
+  or bulk-extract its databases, reverse engineer the app except as the law
+  permits, or submit unlawful or deliberately false content through community
+  features such as food submissions.</p>
 
-  <h2>7. Importing your data from other apps</h2>
+  <h2 id="t7">7. Community food data</h2>
+  <p>When you submit or correct food data — including nutrition-label scans that
+  are verified and added to Caterpillar's shared verified-food database — you
+  grant us a perpetual, royalty-free licence to use, edit and distribute that
+  contribution within the service. It may, after review, be shown to other
+  users. <strong>Photographs you attach as evidence are stored with the
+  submission and reviewed by a human</strong>, so submissions must not contain
+  personal information, and you should not include anything in frame you would
+  not want a moderator to see. Approved contributions remain in the shared
+  database if you later delete your account, because other users rely on them;
+  they contain product facts, not personal information.</p>
+
+  <h2 id="t8">8. Importing your data from other apps</h2>
   <p>Caterpillar can import history you export from another tracker. You are
   responsible for having the right to use that data. Imported entries are
-  treated as your own logs: they fill gaps in your history and never
-  overwrite days you've already recorded, and they don't earn achievements
-  or streaks, which are reserved for logging done in Caterpillar.</p>
+  treated as your own logs: they fill gaps in your history and never overwrite
+  days you've already recorded, and they don't earn achievements or streaks,
+  which are reserved for logging done in Caterpillar.</p>
 
-  <h2>8. Intellectual property</h2>
-  <p>The app, its artwork (including the Butterfly Gallery collection), name
-  and branding are our property or licensed to us. Third-party food data is
-  used under its respective licences, including Open Food Facts (ODbL) and
+  <h2 id="t9">9. Intellectual property</h2>
+  <p>The app, its artwork (including the caterpillar, the Butterfly Gallery
+  collection and the garden scenery), name and branding are our property or
+  licensed to us. Third-party food data is used under its respective licences,
+  including Open Food Facts (ODbL), FSANZ food composition data and
   public-domain government sources.</p>
 
-  <h2>9. Disclaimers and liability</h2>
+  <h2 id="t10">10. Disclaimers and liability</h2>
   <p>The app is provided "as is". To the maximum extent permitted by law —
-  including the Australian Consumer Law, whose guarantees are not excluded —
-  we disclaim warranties of accuracy, availability and fitness for a
-  particular purpose, and our total liability for any claim relating to the
-  app is limited to the amount you paid us in the 12 months before the claim
-  arose. We are not liable for decisions you make based on the app's
-  estimates.</p>
+  including the Australian Consumer Law, whose guarantees are not excluded — we
+  disclaim warranties of accuracy, availability and fitness for a particular
+  purpose, and our total liability for any claim relating to the app is limited
+  to the amount you paid us in the 12 months before the claim arose. We are not
+  liable for decisions you make based on the app's estimates.</p>
 
-  <h2>10. Changes and termination</h2>
-  <p>We may update the app, these terms, or discontinue features (with
+  <h2 id="t11">11. Changes and termination</h2>
+  <p>We may update the app, these terms, or discontinue features, with
   reasonable notice for material changes — continued use after notice is
-  acceptance). We may suspend accounts that breach these terms.</p>
+  acceptance. We may suspend accounts that breach these terms. The date at the
+  top of this page always reflects the current version.</p>
 
-  <h2>11. Governing law</h2>
-  <p>These terms are governed by the laws of Australia. Disputes are subject
-  to the non-exclusive jurisdiction of Australian courts.</p>
+  <h2 id="t12">12. Governing law</h2>
+  <p>These terms are governed by the laws of Australia. Disputes are subject to
+  the non-exclusive jurisdiction of Australian courts.</p>
 
-  <h2>12. Contact</h2>
-  <p>Questions about these terms: <a href="mailto:JackKGrant@icloud.com">JackKGrant@icloud.com</a></p>
+  <h2 id="t13">13. Contact</h2>
+  <p>Questions about these terms:
+  <a href="mailto:JackKGrant@icloud.com">JackKGrant@icloud.com</a></p>
 </section>
 
 <footer>
+  <div class="marque">
+    <img src="assets/appicon.png" alt="" width="28" height="28">Caterpillar Calorie Tracker
+  </div>
   <div class="links">
     <a href="how-it-works.html">How it works</a>
     <a href="faq.html">FAQ</a>
     <a href="terms.html">Terms of Service</a>
     <a href="privacy.html">Privacy Policy</a>
+    <a href="mailto:JackKGrant@icloud.com">Contact</a>
   </div>
-  © 2026 Caterpillar Calorie Tracker. Made in Australia. 🐛→🦋
+  © 2026 Caterpillar Calorie Tracker. Made in Australia.
 </footer>
 
 </body>

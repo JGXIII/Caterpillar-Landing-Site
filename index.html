@@ -4,121 +4,304 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Caterpillar — the calorie tracker that grows with you</title>
-<meta name="description" content="Caterpillar Calorie Tracker for iPhone: AI meal scanning with LiDAR portioning, instant barcode scans, hydration tracking, and a collectible butterfly gallery that makes healthy habits feel like play.">
+<meta name="description" content="Caterpillar Calorie Tracker for iPhone: AI meal scanning with LiDAR portioning, instant barcode scans, honest hydration tracking, and a collectible butterfly gallery that makes healthy habits feel like play.">
+<meta name="theme-color" content="#2e7d32">
+<link rel="icon" href="assets/appicon.png">
+<link rel="apple-touch-icon" href="assets/appicon-180.png">
+<meta property="og:title" content="Caterpillar — the calorie tracker that grows with you">
+<meta property="og:description" content="Snap your plate. Watch your caterpillar grow. An honest, Australian-first calorie tracker for iPhone.">
+<meta property="og:image" content="assets/appicon.png">
+<meta property="og:type" content="website">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
-  <a class="brand" href="index.html">🐛 Caterpillar</a>
-  <a href="how-it-works.html">How it works</a>
-  <a href="faq.html">FAQ</a>
-  <a class="cta" href="#download">Get the app</a>
+  <a class="brand" href="index.html">
+    <img src="assets/appicon.png" alt="" width="30" height="30">Caterpillar
+  </a>
+  <a class="hide-sm" href="how-it-works.html">How it works</a>
+  <a class="hide-sm" href="faq.html">FAQ</a>
+  <a class="cta" href="#get">Get the app</a>
 </nav>
 
-<div class="hero">
-  <h1>Tracking calories shouldn't feel like <span class="accent">homework</span>.</h1>
-  <p class="sub">Caterpillar turns every meal you log into growth — for you, and for a
-  little caterpillar working its way toward butterfly. Snap your plate, scan a
-  barcode, watch your garden come alive.</p>
-  <div class="badge-row">
-    <span class="badge">📸 AI Meal Scan with LiDAR</span>
-    <span class="badge">🦋 Collectible achievements</span>
-    <span class="badge">💧 Smart hydration</span>
-    <span class="badge">🇦🇺 Built for Australian foods</span>
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Made in Australia · iPhone</span>
+    <h1>Tracking calories shouldn't feel like <span class="accent">homework</span>.</h1>
+    <p class="sub">Every meal you log grows a little creature working its way
+    toward butterfly. Snap your plate, scan a barcode, and watch the day fill
+    up — no spreadsheets, no guilt, no nagging.</p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#get">Get Caterpillar</a>
+      <a class="btn btn-ghost" href="how-it-works.html">See how it works</a>
+    </div>
+    <span class="store-note">Free to start · No ads, ever · Coming soon to the App&nbsp;Store</span>
+
+    <!-- The app's growth bar, rebuilt in CSS from the same artwork. It grows
+         once on load, which is the fastest way to explain the whole product. -->
+    <div class="growth" aria-hidden="true">
+      <div class="growth-track" id="growthTrack"></div>
+      <div class="growth-ground"></div>
+      <div class="growth-caption">
+        <span>1,180 cal logged</span>
+        <span>Budget 1,754 cal</span>
+      </div>
+    </div>
   </div>
-  <a class="store-btn" id="download" href="#">Download on the App Store</a>
-  <span class="store-note">Coming soon to iPhone · Free to start</span>
-</div>
+</header>
 
 <section>
-  <h2>Log a meal in seconds, not minutes</h2>
-  <p class="lede">Four ways in, zero friction. Pick whichever suits the moment —
-  Caterpillar remembers your portions and habits either way.</p>
-  <div class="grid">
-    <div class="card">
-      <div class="icon">📸</div>
-      <h3>AI Meal Scan</h3>
-      <p>Photograph your plate and Caterpillar identifies every component. On
-      Pro-model iPhones, LiDAR depth measures your actual portion size — not a
-      guess from a stock photo. Packaged products are read straight off the
-      label for accuracy.</p>
+  <div class="wrap">
+    <h2>Log a meal in seconds, not minutes</h2>
+    <p class="lede">Five ways in, all of them fast. Pick whichever suits the
+    moment — Caterpillar remembers your portions and habits either way.</p>
+    <div class="grid">
+      <div class="card reveal">
+        <img class="icon" src="assets/icon_aimealscan.png" alt="" width="54" height="54">
+        <h3>AI Meal Scan</h3>
+        <p>Photograph your plate and Caterpillar identifies every component. On
+        Pro-model iPhones, LiDAR depth measures your actual portion — not a guess
+        from a stock photo. Tell it "130&nbsp;g pasta" and it takes your word for it.</p>
+      </div>
+      <div class="card reveal">
+        <img class="icon" src="assets/icon_barcodescan.png" alt="" width="54" height="54">
+        <h3>Instant barcode scans</h3>
+        <p>Point, beep, logged — with strong coverage of Woolies, Coles and Aldi.
+        Scan five things in a row with Log&nbsp;&amp;&nbsp;Scan&nbsp;Next. Every
+        scan becomes searchable forever after.</p>
+      </div>
+      <div class="card reveal">
+        <img class="icon" src="assets/icon_menuscan.png" alt="" width="54" height="54">
+        <h3>Menu Scan</h3>
+        <p>Eating out? Photograph the menu and tap what you ordered. Portion each
+        dish up or down so a pub lunch doesn't derail the day.</p>
+      </div>
+      <div class="card reveal">
+        <img class="icon" src="assets/icon_voiceinput.png" alt="" width="54" height="54">
+        <h3>Just say it</h3>
+        <p>Talk your meal in while your hands are busy. Or type it — Australian
+        food data comes first, so "maccas" and "Weet-Bix" land where you expect.</p>
+      </div>
+      <div class="card reveal">
+        <img class="icon" src="assets/icon_favourites.png" alt="" width="54" height="54">
+        <h3>Favourites that stick</h3>
+        <p>The things you eat every day are one tap from logged, at the portion
+        you actually have — mixed drinks and powders included.</p>
+      </div>
+      <div class="card reveal">
+        <img class="icon chip" src="assets/icon_gallery.png" alt="" width="54" height="54">
+        <h3>The Butterfly Gallery</h3>
+        <p>Healthy habits earn puzzle pieces that uncover collectible butterfly
+        artwork, including secrets you'll only find by living well.</p>
+      </div>
     </div>
-    <div class="card">
-      <div class="icon">🏷️</div>
-      <h3>Instant barcode scans</h3>
-      <p>Point, beep, logged — with excellent coverage of Woolies, Coles and
-      Aldi products. Scan five things in a row with Log &amp; Scan Next. Every
-      scan becomes searchable forever after.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>A tracker that keeps you honest</h2>
+    <p class="lede">Most apps quietly round in your favour, because a happy
+    number keeps you opening the app. Caterpillar would rather be right.</p>
+
+    <div class="split reveal">
+      <div class="art"><img src="assets/caterpillar_head_full.png" alt="The caterpillar looking full" width="132" height="150"></div>
+      <div>
+        <h3>Cooked, not dry</h3>
+        <p>Pasta, rice and oats roughly triple in weight when you cook them. Log
+        "130&nbsp;g pasta" over a plate of dinner and most trackers price it as dry
+        — overstating one ingredient by two hundred calories. Caterpillar knows
+        food on a plate is cooked food, and says so on the entry.</p>
+      </div>
     </div>
-    <div class="card">
-      <div class="icon">🔎</div>
-      <h3>Search that gets you</h3>
-      <p>Australian food data first (AUSNUT &amp; FSANZ), plus global databases.
-      Type "maccas" and it knows what you mean. Nothing found? Ask AI and it
-      will track the food down for you.</p>
+
+    <div class="split flip reveal">
+      <div class="art"><img src="assets/caterpillar_head_happy.png" alt="The caterpillar, content" width="132" height="150"></div>
+      <div>
+        <h3>Hydration that doesn't flatter you</h3>
+        <p>A dew drop fills with everything you drink, coloured by what it
+        actually was. Coffee and tea count properly — the research says they
+        hydrate you about as well as water. Spirits don't: a neat nip takes
+        water back out of the drop, and you can see it happen.</p>
+      </div>
     </div>
-    <div class="card">
-      <div class="icon">📋</div>
-      <h3>Menu Scan</h3>
-      <p>Eating out? Photograph the restaurant menu and pick what you ordered —
-      Caterpillar estimates the dishes so a pub lunch doesn't derail your day.</p>
+
+    <div class="split reveal">
+      <div class="art"><img src="assets/caterpillar_head_eating.png" alt="The caterpillar eating" width="132" height="150"></div>
+      <div>
+        <h3>Australian food, first</h3>
+        <p>Built on FSANZ food composition data, because Australian mince really
+        is leaner than the American figures most apps quietly use. Barcodes,
+        nutrition panels and a shared verified-food database that gets better
+        every time somebody scans something new.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <section>
-  <h2>Progress you can actually see</h2>
-  <p class="lede">Most trackers give you a number. Caterpillar gives you a world.</p>
-  <div class="grid">
-    <div class="card">
-      <div class="icon">🐛</div>
-      <h3>Your caterpillar companion</h3>
-      <p>It munches when you log, sips when you hydrate, and grows along your
-      day. Overeat and it gets a little dizzy — honest feedback, zero shame.</p>
-    </div>
-    <div class="card">
-      <div class="icon">🦋</div>
-      <h3>The Butterfly Gallery</h3>
-      <p>Every healthy habit earns puzzle pieces that reveal collectible
-      butterfly artwork — including secret achievements you'll only discover by
-      living well. Your collection is saved to your account, safe across
-      devices and reinstalls.</p>
-    </div>
-    <div class="card">
-      <div class="icon">💧</div>
-      <h3>Hydration, done properly</h3>
-      <p>A dew drop fills with every drink — and it knows coffee isn't water.
-      Customise your quick-drinks list, or create your own (yes, your
-      electrolyte mix can count at 110%).</p>
-    </div>
-    <div class="card">
-      <div class="icon">📈</div>
-      <h3>Your whole journey</h3>
-      <p>Weight trends, streaks, weekly insights and Apple Health sync. Sign in
-      with Apple and your history follows you — delete the app, come back next
-      year, it's all still there.</p>
+  <div class="wrap center">
+    <h2>Progress you can actually see</h2>
+    <p class="lede">Most trackers give you a number. Caterpillar gives you a
+    day you can read at a glance.</p>
+    <div class="facts">
+      <div class="fact reveal">
+        <span class="n">Grows</span>
+        <p>Your caterpillar lengthens as the day fills, munches when you log and
+        sips when you drink.</p>
+      </div>
+      <div class="fact reveal">
+        <span class="n">Remembers</span>
+        <p>Sign in and your history, streaks and gallery follow you — new phone,
+        reinstall, next year.</p>
+      </div>
+      <div class="fact reveal">
+        <span class="n">No ads</span>
+        <p>Nothing is sold, nothing is rented, and nothing follows you around
+        the internet.</p>
+      </div>
+      <div class="fact reveal">
+        <span class="n">Yours</span>
+        <p>Export everything to CSV whenever you like, and delete your account
+        from inside the app.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="cta-banner">
-    <h2>Ready to grow?</h2>
-    <p>Free to start. No ads. Your data is yours — always.</p>
-    <a class="store-btn" href="#">Download on the App Store</a>
+<section id="get">
+  <div class="wrap">
+    <div class="cta-banner">
+      <div class="parade" aria-hidden="true">
+        <img src="assets/caterpillar_walk_1.png" alt="">
+        <img src="assets/caterpillar_walk_2.png" alt="">
+        <img src="assets/caterpillar_walk_3.png" alt="">
+        <img src="assets/caterpillar_walk_2.png" alt="">
+        <img src="assets/caterpillar_head_happy.png" alt="">
+      </div>
+      <h2>Ready to grow?</h2>
+      <p>Free to start. No ads. Your data is yours — and you can take it with
+      you whenever you want.</p>
+      <a class="btn btn-primary" href="#">Download on the App Store</a>
+      <span class="store-note">Coming soon to iPhone · Requires iOS&nbsp;26</span>
+    </div>
   </div>
 </section>
 
 <footer>
+  <div class="marque">
+    <img src="assets/appicon.png" alt="" width="28" height="28">Caterpillar Calorie Tracker
+  </div>
   <div class="links">
     <a href="how-it-works.html">How it works</a>
     <a href="faq.html">FAQ</a>
     <a href="terms.html">Terms of Service</a>
     <a href="privacy.html">Privacy Policy</a>
+    <a href="mailto:JackKGrant@icloud.com">Contact</a>
   </div>
-  © 2026 Caterpillar Calorie Tracker. Made in Australia. 🐛→🦋
+  © 2026 Caterpillar Calorie Tracker. Made in Australia.
 </footer>
 
+<script>
+// ── The growth bar ───────────────────────────────────────────────────────
+// Built here rather than written out as markup so the segment count is one
+// number to change, and so the overlap maths lives in one place instead of
+// being baked into a dozen inline styles.
+//
+// Geometry mirrors the in-app bar exactly: segments are 0.882 of the segment
+// height wide, overlap by 45%, and the head sits forward of the last segment
+// by the same 0.3-of-an-overlap nudge. Getting this wrong is what once made
+// the widget's caterpillar cover half its container.
+(function () {
+  var track = document.getElementById("growthTrack");
+  if (!track) return;
+
+  var SEGMENTS = 7;                       // 7 of 10 — a good day, not a full one
+  var FULL = 10;                          // a full bar, for sizing
+  var FRAMES = ["assets/caterpillar_walk_1.png",
+                "assets/caterpillar_walk_2.png",
+                "assets/caterpillar_walk_3.png"];
+  var segW = 0.882, overlap = segW * 0.45, step = segW - overlap;
+
+  // Segment height derived from the MEASURED width, so a full 10-segment body
+  // would span the track exactly. A fixed size can only be right at one width:
+  // at 46px the body covered 36% of a 560px track and looked stranded — the
+  // same mistake the widget's caterpillar made before it was sized from its
+  // container. widthPerHeight = FULL*step + headW - overlap*0.3.
+  var widthPerHeight = FULL * step + 1.103 - overlap * 0.3;
+  function size() {
+    var w = track.clientWidth;
+    if (w > 0) track.parentElement.style.setProperty(
+      "--seg", (w / widthPerHeight).toFixed(2) + "px");
+  }
+  // Measured, not hardcoded — and measured more than once. The track can
+  // legitimately be zero-width the first time this runs (a background tab, a
+  // container that lays out late), and a single measurement would then leave
+  // the fallback size in place forever with no resize event to correct it.
+  //
+  // The observer is held in a variable deliberately: an unreferenced
+  // ResizeObserver is eligible for collection in some engines, which is
+  // exactly what happened here — the callback never fired and the caterpillar
+  // stayed at its fallback size.
+  size();
+  var ro = null;
+  if ("ResizeObserver" in window) {
+    ro = new ResizeObserver(size);
+    ro.observe(track);
+  }
+  window.addEventListener("resize", size, { passive: true });
+  window.addEventListener("load", size);
+
+  for (var i = 0; i < SEGMENTS; i++) {
+    var s = document.createElement("img");
+    s.className = "seg";
+    // Cycling the three walk frames across the body gives the ripple the app
+    // has, without animating each segment's src.
+    s.src = FRAMES[i % FRAMES.length];
+    s.alt = "";
+    s.style.left = "calc(var(--seg) * " + (i * step).toFixed(4) + ")";
+    s.style.zIndex = String(i);
+    s.style.animationDelay = (i * 0.09).toFixed(2) + "s, " +
+                             (i * 0.09).toFixed(2) + "s";
+    track.appendChild(s);
+  }
+
+  var head = document.createElement("img");
+  head.className = "head";
+  head.src = "assets/caterpillar_head_happy.png";
+  head.alt = "";
+  head.style.left = "calc(var(--seg) * " +
+                    (SEGMENTS * step - overlap * 0.3).toFixed(4) + ")";
+  head.style.animationDelay = (SEGMENTS * 0.09).toFixed(2) + "s, " +
+                              (SEGMENTS * 0.09).toFixed(2) + "s";
+  track.appendChild(head);
+})();
+
+// ── Scroll reveal ────────────────────────────────────────────────────────
+// Progressive enhancement: the .reveal class only hides content once we know
+// IntersectionObserver is available to bring it back. Without this guard an
+// old browser would render a page of invisible cards.
+(function () {
+  var items = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    items.forEach(function (el) { el.classList.add("in"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("in");
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+  items.forEach(function (el, i) {
+    el.style.transitionDelay = (Math.min(i, 5) * 0.055).toFixed(3) + "s";
+    io.observe(el);
+  });
+})();
+</script>
 </body>
 </html>

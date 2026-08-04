@@ -4,129 +4,174 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Caterpillar — FAQ</title>
-<meta name="description" content="Frequently asked questions about Caterpillar Calorie Tracker: accuracy, LiDAR, privacy, accounts, Apple Health, and more.">
+<meta name="description" content="Common questions about Caterpillar Calorie Tracker: accuracy, LiDAR, pricing, privacy, Apple Health, hydration and your data.">
+<meta name="theme-color" content="#2e7d32">
+<link rel="icon" href="assets/appicon.png">
+<link rel="apple-touch-icon" href="assets/appicon-180.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
-  <a class="brand" href="index.html">🐛 Caterpillar</a>
-  <a href="how-it-works.html">How it works</a>
-  <a href="faq.html">FAQ</a>
-  <a class="cta" href="index.html#download">Get the app</a>
+  <a class="brand" href="index.html">
+    <img src="assets/appicon.png" alt="" width="30" height="30">Caterpillar
+  </a>
+  <a class="hide-sm" href="how-it-works.html">How it works</a>
+  <a class="hide-sm" href="faq.html">FAQ</a>
+  <a class="cta" href="index.html#get">Get the app</a>
 </nav>
 
-<div class="hero" style="padding-bottom:40px;">
-  <h1>Questions, <span class="accent">answered</span></h1>
-  <p class="sub">If it's not here, email us — a human reads every message.</p>
-</div>
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">FAQ</span>
+    <h1>Questions, <span class="accent">answered</span></h1>
+    <p class="sub">If it isn't here, email us — a human reads every message.</p>
+  </div>
+</header>
 
-<section style="max-width:760px;">
+<section>
+  <div class="wrap" style="max-width:760px">
 
-  <details>
-    <summary>How accurate is the AI Meal Scan?</summary>
-    <p>Honest answer: it's an estimate — a good one. For plated meals, the AI
-    identifies each component and, on LiDAR-equipped iPhones, real depth
-    measurement sizes your portions instead of guessing. For packaged products
-    the app reads the nutrition label itself, and calories are always computed
-    from the macros on-device. You can edit any item before logging, and a
-    kitchen scale in frame is treated as the source of truth.</p>
-  </details>
+    <details class="qa">
+      <summary>How accurate is the AI Meal Scan?</summary>
+      <p>It's an estimate — a careful one. The AI identifies each component, and
+      on LiDAR-equipped iPhones real depth measurement sizes your portions
+      rather than guessing. Packaged products are read off the nutrition panel,
+      and calories are always recomputed on your phone from the macros, so a
+      hallucinated calorie figure can't survive. A kitchen scale in frame is
+      treated as the source of truth, and you can edit any item before logging.</p>
+    </details>
 
-  <details>
-    <summary>Do I need an iPhone with LiDAR?</summary>
-    <p>No. LiDAR (iPhone Pro models) makes portion sizing sharper, but every
-    feature works on any supported iPhone — the AI falls back to careful
-    visual estimation.</p>
-  </details>
+    <details class="qa">
+      <summary>Does it know the difference between cooked and dry pasta?</summary>
+      <p>Yes, and this is where most trackers quietly go wrong. Pasta, rice, oats
+      and lentils roughly triple in weight when cooked, so pricing a plate of
+      dinner at dry-weight values overstates it by two or three times.
+      Caterpillar treats food on a plate as cooked food, corrects the figure if
+      the estimate came back at dry-weight values, and tells you it did.</p>
+    </details>
 
-  <details>
-    <summary>Is Caterpillar free?</summary>
-    <p>Caterpillar is free to use for core tracking. A Pro subscription is
-    planned for launch with extras like meal-photo cloud backup and advanced
-    goal tools — pricing will be announced in the app.</p>
-  </details>
+    <details class="qa">
+      <summary>Do I need an iPhone with LiDAR?</summary>
+      <p>No. LiDAR (Pro models) makes portion sizing sharper, but every feature
+      works on any supported iPhone — the AI falls back to careful visual
+      estimation, blended with your own description if you give one.</p>
+    </details>
 
-  <details>
-    <summary>What happens to my data if I delete the app?</summary>
-    <p>If you've signed in with Apple, your history, achievements, favourites
-    and settings are backed up to your account — reinstall, sign in, and
-    everything returns. Without an account, data lives only on your device and
-    is removed with the app.</p>
-  </details>
+    <details class="qa">
+      <summary>Does coffee count toward hydration? What about alcohol?</summary>
+      <p>Coffee counts, and so does tea — measured over a day they hydrate you
+      about as well as water, which is not what folklore says. Alcohol depends
+      entirely on strength: a beer is still net hydrating, wine is roughly
+      break-even, and a neat spirit actually takes water back out of your dew
+      drop. You can watch the drop fall when you log one. It seemed more useful
+      to be honest than to be flattering.</p>
+    </details>
 
-  <details>
-    <summary>Where does my data live, and who can see it?</summary>
-    <p>Your synced data is stored with our backend provider (Supabase) and is
-    readable only by your account — enforced at the database level. We don't
-    run ads, and we never sell personal data. Full details are in the
-    <a href="privacy.html">Privacy Policy</a>.</p>
-  </details>
+    <details class="qa">
+      <summary>Is Caterpillar free?</summary>
+      <p>Free for core tracking — logging, scanning, hydration, streaks and the
+      gallery. A Pro subscription (yearly, monthly or weekly) adds extras;
+      pricing is shown in the app before you buy anything, and billing is handled
+      by Apple. There are no ads at any tier.</p>
+    </details>
 
-  <details>
-    <summary>Are my meal photos uploaded?</summary>
-    <p>A photo you scan is sent securely to our AI provider once, to generate
-    the analysis, then the app keeps a small copy on your device for your
-    timeline. Cloud backup of meal photos is a planned Pro feature — free
-    users' photos never leave the phone after analysis.</p>
-  </details>
+    <details class="qa">
+      <summary>Are there limits on the AI features?</summary>
+      <p>There are fair-use ceilings on AI requests per hour and per day, so one
+      person can't run the shared service flat out. They're set well above
+      ordinary use — you'd have to be scanning continuously to notice. They
+      apply to everyone, Pro included.</p>
+    </details>
 
-  <details>
-    <summary>Does it work with Apple Health?</summary>
-    <p>Yes — two-way. Caterpillar can read steps, active energy, exercise
-    minutes and weight (with your permission), and write your logged water and
-    weigh-ins back to Health. You choose exactly which categories sync.</p>
-  </details>
+    <details class="qa">
+      <summary>Are my meal photos uploaded?</summary>
+      <p>A photo you scan is sent securely to our AI provider once, to generate
+      the analysis, and the app then keeps a small compressed copy on your device
+      for your timeline. If you submit a food correction, the photos you took as
+      evidence travel with it so a human can check the numbers against the
+      packaging.</p>
+    </details>
 
-  <details>
-    <summary>Is the food database Australian?</summary>
-    <p>Australian-first: AUSNUT and FSANZ data plus a curated local database of
-    Aussie staples and brands, backed by Open Food Facts and USDA for global
-    coverage. Barcode coverage of Woolworths, Coles and Aldi products is
-    excellent.</p>
-  </details>
+    <details class="qa">
+      <summary>What happens to my data if I delete the app?</summary>
+      <p>If you've signed in, your history, achievements, favourites and settings
+      are backed up to your account — reinstall, sign in, and everything returns.
+      Without an account, data lives only on your device and goes with the app.
+      Either way you can export the lot to CSV first.</p>
+    </details>
 
-  <details>
-    <summary>What's the Butterfly Gallery?</summary>
-    <p>Caterpillar's take on achievements: healthy habits earn puzzle pieces
-    that gradually reveal collectible butterfly artwork across four rarity
-    tiers. Some achievements are secret until you stumble into them. Completed
-    art stays in your gallery for good.</p>
-  </details>
+    <details class="qa">
+      <summary>Where does my data live, and who can see it?</summary>
+      <p>Synced data is stored with our backend provider (Supabase) and is
+      readable only by your account, enforced at the database level. We don't run
+      ads and we never sell personal data. Full details are in the
+      <a href="privacy.html">Privacy Policy</a>.</p>
+    </details>
 
-  <details>
-    <summary>Can it handle protein powders and meal-replacement shakes?</summary>
-    <p>Yes — and properly. Log the serving and tell Caterpillar how much water
-    you mixed it with: calories and macros stay per-serving while the mixing
-    water counts toward hydration. Your pre-workout finally makes sense in a
-    tracker.</p>
-  </details>
+    <details class="qa">
+      <summary>How do I sign in?</summary>
+      <p>Sign in with Apple, with Google, or with an email address and password —
+      whichever you prefer. An account exists so your history survives losing or
+      changing a phone.</p>
+    </details>
 
-  <details>
-    <summary>Is this medical advice?</summary>
-    <p>No. Caterpillar provides nutrition estimates and habit tools for general
-    wellbeing. It's not a medical device and doesn't replace advice from a
-    doctor or accredited dietitian — especially if you have a medical
-    condition or history of disordered eating.</p>
-  </details>
+    <details class="qa">
+      <summary>Does it work with Apple Health?</summary>
+      <p>Yes, two-way. Caterpillar can read steps, active energy, exercise
+      minutes and weight with your permission, and write your logged water and
+      weigh-ins back to Health. You choose exactly which categories sync.</p>
+    </details>
 
-  <details>
-    <summary>How do I delete my account?</summary>
-    <p>In the app: Nest → Delete Account. Your request is processed within 48
-    hours and removes your cloud data entirely. Made a mistake? Email us
-    straight away and we'll cancel it.</p>
-  </details>
+    <details class="qa">
+      <summary>Can I bring my history from another app?</summary>
+      <p>Yes. Export from your old tracker and import the file — it's read
+      entirely on your device and never uploaded. Imported entries fill gaps in
+      your history and never overwrite days you've already recorded.</p>
+    </details>
 
+    <details class="qa">
+      <summary>Is it suitable if I've struggled with disordered eating?</summary>
+      <p>Please talk to a professional first. Caterpillar is a general wellbeing
+      tool, not a medical device, and calorie tracking isn't right for everyone.
+      There's no shaming language and no punishment for going over, but that
+      doesn't make it the right tool for every person.</p>
+    </details>
+
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="cta-banner">
+      <div class="parade" aria-hidden="true">
+        <img src="assets/caterpillar_walk_1.png" alt="">
+        <img src="assets/caterpillar_walk_2.png" alt="">
+        <img src="assets/caterpillar_walk_3.png" alt="">
+        <img src="assets/caterpillar_walk_2.png" alt="">
+        <img src="assets/caterpillar_head_happy.png" alt="">
+      </div>
+      <h2>Still curious?</h2>
+      <p>Email <a href="mailto:JackKGrant@icloud.com" style="color:#fff">JackKGrant@icloud.com</a>
+      — or just try it and see.</p>
+      <a class="btn btn-primary" href="index.html#get">Get Caterpillar</a>
+      <span class="store-note">Free to start · Coming soon to iPhone</span>
+    </div>
+  </div>
 </section>
 
 <footer>
+  <div class="marque">
+    <img src="assets/appicon.png" alt="" width="28" height="28">Caterpillar Calorie Tracker
+  </div>
   <div class="links">
     <a href="how-it-works.html">How it works</a>
     <a href="faq.html">FAQ</a>
     <a href="terms.html">Terms of Service</a>
     <a href="privacy.html">Privacy Policy</a>
+    <a href="mailto:JackKGrant@icloud.com">Contact</a>
   </div>
-  © 2026 Caterpillar Calorie Tracker. Made in Australia. 🐛→🦋
+  © 2026 Caterpillar Calorie Tracker. Made in Australia.
 </footer>
 
 </body>

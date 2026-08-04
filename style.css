@@ -1,161 +1,409 @@
-/* Caterpillar Calorie Tracker — marketing site shared styles.
-   Garden palette pulled from the app: garden green, sun yellow, leaf tones. */
+/* Caterpillar Calorie Tracker — site styles
+   ------------------------------------------------------------------
+   Design notes, so future edits keep the through-line:
+
+   · The app's own palette. Deep forest greens for ground, warm amber for
+     anything the user should act on. The CTA is the only saturated amber on
+     a page, so the eye lands on it without being shouted at.
+   · No emoji anywhere. Every icon is the app's real artwork — the same files
+     the app ships — so the site looks like the product rather than like a
+     description of it.
+   · Motion is decorative and always opt-out. Everything animated degrades to
+     a static, correct layout under prefers-reduced-motion.
+   · Light and dark both first-class. The palette is defined once as custom
+     properties and flipped wholesale.
+   ------------------------------------------------------------------ */
 
 :root {
-  --garden: #2e7d32;
-  --garden-deep: #0d3311;
-  --garden-dark: #0a1f0d;
-  --leaf: #66bb6a;
-  --leaf-soft: #e8f5e9;
-  --sun: #f9a825;
-  --sun-soft: #fff5dd;
-  --ink: #1c2b1e;
-  --ink-soft: #4b5f4e;
-  --card: #ffffff;
-  --line: #dce9dd;
+  --ink:        #0f2113;
+  --ink-soft:   #3c5442;
+  --ink-faint:  #5d7364;
+  --paper:      #f6f9f4;
+  --surface:    #ffffff;
+  --surface-2:  #eef4ea;
+  --line:       #dbe7d6;
+
+  --leaf:       #2e7d32;
+  --leaf-deep:  #1b5e20;
+  --leaf-lift:  #7cc96f;
+  --amber:      #f2a007;
+  --amber-deep: #d98600;
+  /* Links get their own token. --leaf reads at 2.8:1 on the dark card
+     background and 4.26:1 on the light one — both under the 4.5 needed for
+     body text, and the dark case badly so. */
+  --link:       #1b5e20;
+
+  --radius:     18px;
+  --radius-lg:  28px;
+  --shadow:     0 1px 2px rgba(15,33,19,.05), 0 8px 28px rgba(15,33,19,.07);
+  --shadow-lg:  0 2px 6px rgba(15,33,19,.06), 0 24px 60px rgba(15,33,19,.14);
+  --measure:    68ch;
+  --pad:        clamp(20px, 5vw, 40px);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink:       #eaf3e8;
+    --ink-soft:  #b4c9b6;
+    --ink-faint: #8aa891;
+    --paper:     #0a1710;
+    --surface:   #12271a;
+    --surface-2: #16301f;
+    --line:      #24422c;
+    --leaf-lift: #8fd682;
+    --link:      #8fd682;
+    --shadow:    0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
+    --shadow-lg: 0 2px 6px rgba(0,0,0,.35), 0 24px 60px rgba(0,0,0,.5);
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html, body { overflow-x: hidden; max-width: 100%; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", sans-serif;
+  margin: 0;
+  background: var(--paper);
   color: var(--ink);
-  background: #f6faf6;
-  line-height: 1.6;
+  font: 17px/1.65 ui-rounded, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ── Nav ── */
-nav {
+img { max-width: 100%; display: block; }
+a { color: var(--link); }
+
+h1, h2, h3 { line-height: 1.12; letter-spacing: -0.02em; margin: 0 0 .5em; }
+h1 { font-size: clamp(2.3rem, 6.2vw, 4.1rem); font-weight: 800; }
+h2 { font-size: clamp(1.7rem, 3.6vw, 2.6rem); font-weight: 800; }
+h3 { font-size: 1.16rem; font-weight: 700; }
+p  { margin: 0 0 1em; }
+
+.wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 var(--pad); }
+
+/* ── Navigation ─────────────────────────────────────────────── */
+/* Scoped to a DIRECT child of body. The table of contents on the legal pages
+   is also a <nav> — semantically correct — and an unscoped `nav` selector
+   turned it into a sticky flex bar, which on a phone shredded the section
+   links into unreadable columns. Any future nested <nav> is safe now. */
+
+body > nav {
   position: sticky; top: 0; z-index: 50;
-  display: flex; align-items: center; gap: 24px;
-  padding: 14px 24px;
-  background: rgba(246, 250, 246, 0.92);
-  backdrop-filter: blur(10px);
+  display: flex; align-items: center; gap: 4px;
+  padding: 10px var(--pad);
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter: saturate(1.6) blur(14px);
+  -webkit-backdrop-filter: saturate(1.6) blur(14px);
   border-bottom: 1px solid var(--line);
 }
-nav .brand {
-  font-weight: 800; font-size: 18px; color: var(--garden);
-  text-decoration: none; margin-right: auto;
+body > nav .brand {
+  display: flex; align-items: center; gap: 9px;
+  font-weight: 800; font-size: 1.04rem; letter-spacing: -0.02em;
+  color: var(--ink); text-decoration: none; margin-right: auto;
 }
-nav a { color: var(--ink-soft); text-decoration: none; font-size: 15px; font-weight: 600; }
-nav a:hover { color: var(--garden); }
-nav a.cta {
-  background: var(--sun); color: var(--garden-deep);
-  padding: 8px 18px; border-radius: 999px;
+body > nav .brand img { width: 30px; height: 30px; border-radius: 8px; }
+body > nav a:not(.brand) {
+  color: var(--ink-soft); text-decoration: none; font-size: .95rem;
+  font-weight: 600; padding: 8px 12px; border-radius: 10px;
 }
+body > nav a:not(.brand):hover { color: var(--ink); background: var(--surface-2); }
+body > nav .cta {
+  background: var(--amber); color: #21160a !important;
+  padding: 9px 16px !important; border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(242,160,7,.35);
+}
+body > nav .cta:hover { background: var(--amber-deep); }
+@media (max-width: 620px) { body > nav .hide-sm { display: none; } }
 
-/* ── Hero ── */
+/* ── Hero ───────────────────────────────────────────────────── */
+
 .hero {
+  position: relative; overflow: hidden;
+  padding: clamp(56px, 11vw, 116px) 0 clamp(40px, 7vw, 76px);
   text-align: center;
-  padding: 88px 24px 72px;
   background:
-    radial-gradient(1200px 500px at 50% -100px, var(--leaf-soft), transparent),
-    #f6faf6;
+    radial-gradient(120% 90% at 50% -10%,
+      color-mix(in srgb, var(--leaf) 22%, transparent), transparent 62%),
+    var(--paper);
 }
-.hero h1 {
-  font-size: clamp(34px, 6vw, 58px);
-  font-weight: 900; letter-spacing: -0.02em; color: var(--garden-deep);
-  max-width: 780px; margin: 0 auto 18px;
+/* The garden scene from the app, held right back so it reads as atmosphere
+   rather than as a photo behind text. */
+.hero::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("assets/bg_garden.jpg") center 22% / cover no-repeat;
+  opacity: .17; filter: saturate(1.25) contrast(1.05);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 92%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 92%);
+  pointer-events: none;
 }
-.hero h1 .accent { color: var(--garden); }
-.hero p.sub {
-  font-size: clamp(17px, 2.5vw, 21px);
-  color: var(--ink-soft); max-width: 620px; margin: 0 auto 34px;
-}
-.hero .badge-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 34px; }
-.badge {
-  background: var(--card); border: 1px solid var(--line);
-  padding: 7px 16px; border-radius: 999px;
-  font-size: 13.5px; font-weight: 700; color: var(--garden);
-}
-.store-btn {
-  display: inline-block; background: var(--garden-deep); color: #fff;
-  font-weight: 800; font-size: 17px;
-  padding: 15px 34px; border-radius: 16px; text-decoration: none;
-}
-.store-btn:hover { background: var(--garden); }
-.store-note { display: block; margin-top: 12px; font-size: 13px; color: var(--ink-soft); }
+@media (prefers-color-scheme: dark) { .hero::before { opacity: .22; } }
+.hero > * { position: relative; }
 
-/* ── Sections & cards ── */
-section { max-width: 1060px; margin: 0 auto; padding: 64px 24px; }
-section h2 {
-  font-size: clamp(26px, 4vw, 36px); font-weight: 900;
-  color: var(--garden-deep); letter-spacing: -0.01em;
-  text-align: center; margin-bottom: 12px;
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: .8rem; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--leaf);
+  background: color-mix(in srgb, var(--leaf) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--leaf) 26%, transparent);
+  padding: 7px 15px; border-radius: 999px; margin-bottom: 22px;
 }
-section p.lede { text-align: center; color: var(--ink-soft); max-width: 640px; margin: 0 auto 44px; }
+@media (prefers-color-scheme: dark) { .eyebrow { color: var(--leaf-lift); } }
+.hero h1 { max-width: 16ch; margin-inline: auto; }
+.hero .sub {
+  max-width: 54ch; margin: 18px auto 0;
+  font-size: clamp(1.04rem, 2.1vw, 1.2rem); color: var(--ink-soft);
+}
+.accent {
+  color: var(--leaf-deep);
+  background: linear-gradient(transparent 62%,
+              color-mix(in srgb, var(--amber) 45%, transparent) 62%);
+  padding: 0 .08em;
+}
+@media (prefers-color-scheme: dark) { .accent { color: var(--leaf-lift); } }
 
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.cta-row {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  justify-content: center; align-items: center; margin-top: 30px;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 1.02rem; text-decoration: none;
+  padding: 15px 28px; border-radius: 999px; border: 1px solid transparent;
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+}
+.btn-primary {
+  background: linear-gradient(180deg, var(--amber), var(--amber-deep));
+  color: #21160a; box-shadow: 0 6px 22px rgba(242,160,7,.4);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(242,160,7,.5); }
+.btn-ghost {
+  background: var(--surface); color: var(--ink); border-color: var(--line);
+  box-shadow: var(--shadow);
+}
+.btn-ghost:hover { transform: translateY(-2px); }
+.store-note { display: block; margin-top: 14px; font-size: .88rem; color: var(--ink-faint); }
+
+/* ── The growth bar: the app's core metaphor, on the page ───── */
+
+/* --seg is set from the measured track width in index.html, the same way the
+   widget derives its segment height from a GeometryReader. A hardcoded size
+   can only be right at one width: at 46px the body covered 36% of a 560px
+   track and looked stranded, exactly the bug the widget had.
+   The value here is only a fallback for a no-JS render. */
+.growth {
+  --seg: 56px;
+  margin: clamp(34px, 6vw, 58px) auto 0;
+  max-width: 440px; padding: 0 var(--pad);
+}
+.growth-track {
+  position: relative; height: calc(var(--seg) * 1.55);
+}
+/* Segments overlap by 45%, exactly as the in-app growth bar does, so the body
+   reads as one creature rather than a row of beads. */
+.growth-track .seg, .growth-track .head {
+  position: absolute; bottom: 0;
+  width: calc(var(--seg) * 0.882); height: var(--seg);
+  opacity: 0;
+  animation: sprout .55s cubic-bezier(.2,1.5,.4,1) forwards,
+             bob 1.05s ease-in-out infinite;
+}
+.growth-track .head {
+  width: calc(var(--seg) * 1.103); height: calc(var(--seg) * 1.25);
+  bottom: calc(var(--seg) * 0.14); z-index: 20;
+}
+@keyframes sprout {
+  from { opacity: 0; transform: translateY(9px) scale(.72); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes bob {
+  0%, 100% { margin-bottom: 0; }
+  50%      { margin-bottom: 4px; }
+}
+.growth-ground {
+  height: 3px; border-radius: 3px; margin-top: 6px;
+  background: linear-gradient(to right,
+    color-mix(in srgb, var(--leaf-lift) 75%, transparent),
+    color-mix(in srgb, var(--leaf-lift) 12%, transparent));
+}
+.growth-caption {
+  display: flex; justify-content: space-between; gap: 12px;
+  margin-top: 12px; font-size: .87rem; color: var(--ink-faint); font-weight: 600;
+}
+
+/* ── Sections ───────────────────────────────────────────────── */
+
+section { padding: clamp(52px, 8vw, 96px) 0; }
+section > .wrap > h2 { max-width: 20ch; }
+.lede {
+  max-width: 58ch; font-size: clamp(1.02rem, 2vw, 1.14rem);
+  color: var(--ink-soft); margin-bottom: 34px;
+}
+.center { text-align: center; }
+.center h2, .center .lede { margin-inline: auto; }
+
+.grid {
+  display: grid; gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
+}
 .card {
-  background: var(--card); border: 1px solid var(--line);
-  border-radius: 20px; padding: 26px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 26px 24px;
+  box-shadow: var(--shadow);
+  transition: transform .2s ease, box-shadow .2s ease;
 }
-.card .icon {
-  width: 46px; height: 46px; border-radius: 14px;
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.card p { color: var(--ink-soft); font-size: .97rem; margin-bottom: 0; }
+.card .icon { width: 54px; height: 54px; margin-bottom: 14px; }
+/* Tab icons ship as small flat silhouettes; a tinted disc gives them a home
+   rather than leaving them floating as grey marks. */
+.card .icon.chip {
+  width: 54px; height: 54px; padding: 11px; border-radius: 15px;
+  background: color-mix(in srgb, var(--leaf) 13%, transparent);
+}
+
+.alt { background: var(--surface-2); }
+
+/* Feature rows — art one side, words the other, alternating. */
+.split {
+  display: grid; gap: clamp(22px, 5vw, 56px); align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.split + .split { margin-top: clamp(44px, 7vw, 82px); }
+.split .art {
   display: flex; align-items: center; justify-content: center;
-  font-size: 24px; margin-bottom: 14px;
-  background: var(--leaf-soft);
+  min-height: 190px; padding: 30px; border-radius: var(--radius-lg);
+  background:
+    radial-gradient(80% 80% at 50% 20%,
+      color-mix(in srgb, var(--leaf) 17%, transparent), transparent 70%),
+    var(--surface);
+  border: 1px solid var(--line);
 }
-.card h3 { font-size: 18px; font-weight: 800; color: var(--garden-deep); margin-bottom: 6px; }
-.card p { font-size: 15px; color: var(--ink-soft); }
+.split .art img { width: clamp(88px, 15vw, 132px); height: auto; }
+.split.flip .art { order: 2; }
+@media (max-width: 760px) { .split.flip .art { order: 0; } }
 
-/* ── Steps (how it works) ── */
-.step { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 30px; }
-.step .num {
-  flex: 0 0 44px; height: 44px; border-radius: 50%;
-  background: var(--sun); color: var(--garden-deep);
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 900; font-size: 19px;
-}
-.step h3 { font-size: 19px; font-weight: 800; color: var(--garden-deep); margin-bottom: 4px; }
-.step p { color: var(--ink-soft); font-size: 15.5px; }
+/* ── Honesty strip ──────────────────────────────────────────── */
 
-/* ── FAQ ── */
-details {
-  background: var(--card); border: 1px solid var(--line);
-  border-radius: 16px; padding: 18px 22px; margin-bottom: 12px;
+.facts { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.fact {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 22px;
 }
-details summary {
-  font-weight: 800; font-size: 16.5px; color: var(--garden-deep);
-  cursor: pointer; list-style: none;
+.fact .n {
+  display: block; font-size: 1.75rem; font-weight: 800;
+  letter-spacing: -0.03em; color: var(--leaf); line-height: 1.15;
 }
-details summary::-webkit-details-marker { display: none; }
-details summary::after { content: "＋"; float: right; color: var(--garden); }
-details[open] summary::after { content: "－"; }
-details p { margin-top: 10px; color: var(--ink-soft); font-size: 15px; }
+@media (prefers-color-scheme: dark) { .fact .n { color: var(--leaf-lift); } }
+.fact p { margin: 6px 0 0; font-size: .93rem; color: var(--ink-soft); }
 
-/* ── Legal pages ── */
-.legal { max-width: 760px; }
-.legal h1 { font-size: 32px; font-weight: 900; color: var(--garden-deep); margin-bottom: 6px; }
-.legal .updated { color: var(--ink-soft); font-size: 14px; margin-bottom: 30px; }
-.legal h2 { font-size: 20px; text-align: left; margin: 30px 0 8px; }
-.legal p, .legal li { font-size: 15.5px; color: var(--ink-soft); margin-bottom: 10px; }
-.legal ul { padding-left: 22px; }
-.notice {
-  background: var(--sun-soft); border: 1px solid #f2dfae;
-  border-radius: 14px; padding: 14px 18px;
-  font-size: 14px; color: #7a5b12; margin-bottom: 28px;
-}
+/* ── Closing CTA ────────────────────────────────────────────── */
 
-/* ── Banner CTA + footer ── */
 .cta-banner {
-  text-align: center; background: var(--garden-deep);
-  border-radius: 28px; padding: 56px 28px; color: #fff;
+  position: relative; overflow: hidden; text-align: center;
+  border-radius: var(--radius-lg); padding: clamp(40px, 7vw, 74px) var(--pad);
+  background: linear-gradient(150deg, var(--leaf-deep), var(--leaf));
+  color: #fff; box-shadow: var(--shadow-lg);
 }
 .cta-banner h2 { color: #fff; }
-.cta-banner p { color: #cfe6d1; margin: 8px 0 26px; }
-.cta-banner .store-btn { background: var(--sun); color: var(--garden-deep); }
+.cta-banner p { color: rgba(255,255,255,.87); max-width: 46ch; margin-inline: auto; }
+.cta-banner .store-note { color: rgba(255,255,255,.82); }
+.cta-banner .parade {
+  display: flex; justify-content: center; align-items: flex-end;
+  margin-bottom: 20px; height: 56px;
+}
+.cta-banner .parade img { height: 42px; width: auto; margin-right: -13px; }
+.cta-banner .parade img:last-child { height: 53px; margin-right: 0; }
+
+/* ── Legal pages ────────────────────────────────────────────── */
+
+.legal { max-width: var(--measure); margin: 0 auto; padding: 46px var(--pad) 70px; }
+.legal h1 { font-size: clamp(2rem, 5vw, 2.8rem); }
+.legal h2 {
+  font-size: 1.2rem; margin: 2.1em 0 .5em; padding-top: .9em;
+  border-top: 1px solid var(--line); scroll-margin-top: 76px;
+}
+.legal h2:first-of-type { border-top: 0; padding-top: 0; }
+.legal p, .legal li { color: var(--ink-soft); font-size: 1rem; }
+.legal ul { padding-left: 1.15em; }
+.legal li { margin-bottom: .5em; }
+.updated {
+  display: inline-block; font-size: .84rem; font-weight: 700;
+  color: var(--leaf); background: color-mix(in srgb, var(--leaf) 12%, transparent);
+  border-radius: 999px; padding: 6px 14px; margin-bottom: 1.6em;
+}
+@media (prefers-color-scheme: dark) { .updated { color: var(--leaf-lift); } }
+.summary {
+  background: var(--surface); border: 1px solid var(--line);
+  border-left: 4px solid var(--leaf);
+  border-radius: var(--radius); padding: 20px 22px; margin-bottom: 2em;
+}
+.summary p:last-child { margin-bottom: 0; }
+.toc {
+  background: var(--surface-2); border-radius: var(--radius);
+  padding: 18px 22px; margin-bottom: 2.2em;
+  columns: 2; column-gap: 26px;
+}
+.toc a { display: block; font-size: .93rem; padding: 3px 0; text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+@media (max-width: 560px) { .toc { columns: 1; } }
+
+/* ── FAQ ────────────────────────────────────────────────────── */
+
+details.qa {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 2px 20px; margin-bottom: 12px;
+}
+details.qa summary {
+  cursor: pointer; font-weight: 700; padding: 16px 0; list-style: none;
+  display: flex; justify-content: space-between; align-items: center; gap: 14px;
+}
+details.qa summary::-webkit-details-marker { display: none; }
+details.qa summary::after {
+  content: "+"; font-size: 1.4rem; font-weight: 600;
+  color: var(--link); flex: 0 0 auto; line-height: 1;
+}
+details.qa[open] summary::after { content: "\2212"; }
+details.qa p { color: var(--ink-soft); font-size: .97rem; padding-bottom: 6px; }
+
+/* ── Footer ─────────────────────────────────────────────────── */
 
 footer {
-  border-top: 1px solid var(--line);
-  padding: 34px 24px 44px; text-align: center;
-  color: var(--ink-soft); font-size: 14px;
+  border-top: 1px solid var(--line); background: var(--surface-2);
+  padding: 40px var(--pad); text-align: center;
+  color: var(--ink-faint); font-size: .9rem;
 }
-footer .links { margin-bottom: 10px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
-footer a { color: var(--garden); text-decoration: none; font-weight: 600; }
+footer .marque {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-weight: 800; color: var(--ink); margin-bottom: 16px;
+}
+footer .marque img { width: 28px; height: 28px; border-radius: 8px; }
+footer .links {
+  display: flex; flex-wrap: wrap; gap: 8px 22px;
+  justify-content: center; margin-bottom: 16px;
+}
+footer .links a { color: var(--ink-soft); text-decoration: none; font-weight: 600; }
+footer .links a:hover { color: var(--link); text-decoration: underline; }
 
-@media (max-width: 560px) {
-  nav { gap: 14px; }
-  nav a:not(.brand):not(.cta) { display: none; }
+/* ── Scroll reveal ──────────────────────────────────────────── */
+
+.reveal { opacity: 0; transform: translateY(18px); }
+.reveal.in {
+  opacity: 1; transform: none;
+  transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1);
+}
+
+/* ── Motion off ─────────────────────────────────────────────── */
+/* Everything above must stay legible and correctly laid out with all motion
+   removed — the growth bar especially has to appear fully grown rather than
+   stuck at zero opacity, which is what an animation-only reveal would do. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+  .growth-track .seg, .growth-track .head { opacity: 1; transform: none; }
+  .reveal { opacity: 1; transform: none; }
+  .card:hover, .btn:hover { transform: none; }
 }
