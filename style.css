@@ -400,6 +400,11 @@ details.qa summary::after {
 }
 details.qa[open] summary::after { content: "\2212"; }
 details.qa p { color: var(--ink-soft); font-size: .97rem; padding-bottom: 6px; }
+details.qa ul { color: var(--ink-soft); font-size: .97rem; margin: 0 0 12px; padding-left: 1.1em; }
+details.qa li { margin-bottom: 8px; }
+details.qa li strong { color: var(--ink); }
+.faq-group { font-size: 1.16rem; font-weight: 800; margin: 34px 0 12px; }
+.faq-group:first-of-type { margin-top: 8px; }
 
 /* ── Footer ─────────────────────────────────────────────────── */
 
