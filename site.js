@@ -76,9 +76,36 @@
     }
     window.addEventListener("load", size);
 
+    // ── EATING CHOMPS ──
+    // In the app an eating caterpillar swaps between its eating and happy
+    // faces every 0.3s, which is what makes it look like it's chewing. A
+    // still eating face just looks stuck mid-bite. Here it eats in bites:
+    // a few seconds of chomping, a pause, and again.
+    var feeding = head === "eating" || head === "drinking";
+    if (feeding && !reduce) {
+      var art = h.firstChild;
+      var mouthful = "url('assets/cat/head-" + head + ".png')";
+      var smile = "url('assets/cat/head-happy.png')";
+      new Image().src = "assets/cat/head-happy.png";      // no flash on first swap
+      var open = true;
+      (function bite() {
+        var chews = 0;
+        var t = setInterval(function () {
+          open = !open;
+          art.style.backgroundImage = open ? mouthful : smile;
+          if (++chews >= 8) {
+            clearInterval(t);
+            art.style.backgroundImage = smile;
+            setTimeout(function () { open = true; art.style.backgroundImage = mouthful; bite(); },
+                       1400 + Math.random() * 1200);
+          }
+        }, 300);
+      })();
+    }
+
     // Every so often it looks around or blinks, as it does in the app, so
-    // it isn't a pure loop.
-    if (!reduce) {
+    // it isn't a pure loop. Not mid-mouthful.
+    if (!reduce && !feeding) {
       (function beat() {
         setTimeout(function () {
           if (Math.random() < 0.6) {

@@ -414,7 +414,10 @@ body > nav .cta:hover { transform: translateY(-1px); }
   50%      { transform: translateY(calc(var(--seg) * -.07)); }
 }
 
-.growth { margin: clamp(30px, 5vw, 48px) auto 0; max-width: 460px; }
+/* The ground line is the whole day, so the full-length body is sized to
+   span it exactly (data-max is effectively off): 7 of 11 segments then sits
+   67% along, where 1,180 of 1,754 belongs. */
+.growth { margin: clamp(30px, 5vw, 48px) auto 0; max-width: 400px; }
 .growth-caption {
   display: flex; justify-content: space-between; gap: 12px;
   margin-top: 12px; font-size: .9rem; color: var(--ink-faint); font-weight: 800;
@@ -583,7 +586,8 @@ section > .wrap > h2 { max-width: 18ch; }
 .split .art > img { width: clamp(110px, 16vw, 160px); height: auto;
   filter: drop-shadow(0 14px 22px rgba(16,38,26,.22)); }
 .split .art > img.appicon { border-radius: 22.5%; }
-.split .art .cat { max-width: 420px; }
+/* Caterpillars in a panel span it, however many segments they have. */
+.split .art .cat { width: 100%; }
 .split .art .phone { --w: 200px; rotate: -3deg; margin-bottom: -120px; }
 .split .art.has-phone { padding-bottom: 0; align-items: flex-start; min-height: 320px; }
 .split.flip .art { order: 2; }
