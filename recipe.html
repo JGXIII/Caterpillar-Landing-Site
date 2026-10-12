@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A recipe shared from Caterpillar</title>
+<meta name="description" content="A recipe shared from Caterpillar Calorie Tracker. Add it to the app in one tap.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#2e7d32">
+<link rel="icon" href="assets/appicon.png">
+<link rel="apple-touch-icon" href="assets/appicon-180.png">
+<link rel="stylesheet" href="style.css">
+<style>
+  .recipe { max-width: 720px; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0 26px; }
+  .stat { background: var(--surface-2); border-radius: 14px; padding: 12px 8px; text-align: center; }
+  .stat b { display: block; font-size: 1.35rem; }
+  .stat span { font-size: .8rem; color: var(--ink-faint); }
+  .ingredients { list-style: none; padding: 0; margin: 0 0 26px; }
+  .ingredients li { display: flex; justify-content: space-between; gap: 12px;
+                    padding: 10px 0; border-bottom: 1px solid var(--surface-2); }
+  .ingredients .amt { color: var(--ink-soft); white-space: nowrap; }
+  .steps { padding-left: 1.2em; }
+  .steps li { margin-bottom: .7em; }
+  .credit { color: var(--ink-faint); font-size: .9rem; }
+  #missing { display: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="index.html">
+    <img src="assets/appicon.png" alt="" width="30" height="30">Caterpillar
+  </a>
+  <a class="hide-sm" href="how-it-works.html">How it works</a>
+  <a class="cta" href="index.html#get">Get the app</a>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Shared recipe</span>
+    <h1 id="name">A recipe for you</h1>
+    <p class="sub" id="sub"></p>
+    <div class="cta-row">
+      <a class="btn btn-primary" id="add" href="#">Add to Caterpillar</a>
+      <a class="btn btn-ghost" href="index.html#get">Get Caterpillar</a>
+    </div>
+    <span class="store-note">Opens Caterpillar on your iPhone, ready to check and save.</span>
+  </div>
+</header>
+
+<section>
+  <div class="wrap recipe" id="body">
+    <div class="stats" id="stats"></div>
+    <h2>Ingredients</h2>
+    <ul class="ingredients" id="ingredients"></ul>
+    <div id="method">
+      <h2>Method</h2>
+      <ol class="steps" id="steps"></ol>
+    </div>
+    <p class="credit" id="credit"></p>
+  </div>
+  <div class="wrap recipe" id="missing">
+    <h2>This link is missing its recipe</h2>
+    <p>It may have been cut short when it was copied. Ask for it to be shared again.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="marque">
+    <img src="assets/appicon.png" alt="" width="28" height="28">Caterpillar Calorie Tracker
+  </div>
+  <div class="links">
+    <a href="how-it-works.html">How it works</a>
+    <a href="faq.html">FAQ</a>
+    <a href="privacy.html">Privacy Policy</a>
+  </div>
+  © 2026 Caterpillar Calorie Tracker. Made in Australia.
+</footer>
+
+<script>
+// The recipe is in the link after the "#", deflated and base64url-encoded by
+// the app (RecipeShare.swift). The part after "#" never reaches any server.
+(async () => {
+  const hash = location.hash.slice(1);
+  const payload = hash.startsWith("r1.") ? hash.slice(3) : null;
+  const fail = () => {
+    document.getElementById("body").style.display = "none";
+    document.getElementById("missing").style.display = "block";
+    document.getElementById("add").style.display = "none";
+  };
+  if (!payload || !("DecompressionStream" in window)) return fail();
+  let r;
+  try {
+    const b64 = payload.replace(/-/g, "+").replace(/_/g, "/");
+    const bytes = Uint8Array.from(atob(b64 + "===".slice((b64.length + 3) % 4)), c => c.charCodeAt(0));
+    const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+    r = JSON.parse(await new Response(stream).text());
+  } catch (e) { return fail(); }
+
+  const text = (id, s) => { document.getElementById(id).textContent = s; };
+  const per = (v) => Math.round((v || 0) / Math.max(r.servings || 1, 1));
+  document.title = `${r.name}, shared from Caterpillar`;
+  text("name", r.name);
+  text("sub", `${r.servings} serving${r.servings === 1 ? "" : "s"}`
+    + (r.prepTimeMinutes ? ` · ${r.prepTimeMinutes} min prep` : "")
+    + (r.cookTimeMinutes ? ` · ${r.cookTimeMinutes} min cook` : ""));
+  document.getElementById("stats").innerHTML = [
+    [per(r.totalCalories), "kcal"], [per(r.totalProtein) + "g", "protein"],
+    [per(r.totalCarbs) + "g", "carbs"], [per(r.totalFat) + "g", "fat"],
+  ].map(([v, k]) => `<div class="stat"><b>${v}</b><span>${k} per serving</span></div>`).join("");
+
+  const ul = document.getElementById("ingredients");
+  for (const i of r.ingredients || []) {
+    const li = document.createElement("li");
+    const n = document.createElement("span"); n.textContent = i.name;
+    const a = document.createElement("span"); a.className = "amt"; a.textContent = i.amount || "";
+    li.append(n, a); ul.append(li);
+  }
+  const ol = document.getElementById("steps");
+  if (!(r.steps || []).length) document.getElementById("method").style.display = "none";
+  for (const s of r.steps || []) {
+    const li = document.createElement("li"); li.textContent = s; ol.append(li);
+  }
+  if (r.sourceCredit) text("credit", `Recipe from ${r.sourceCredit}.`);
+  document.getElementById("add").href = "caterpillar://recipe#r1." + payload;
+})();
+</script>
+</body>
+</html>
