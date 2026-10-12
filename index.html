@@ -4,110 +4,172 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Caterpillar: the calorie tracker that grows with you</title>
-<meta name="description" content="Caterpillar Calorie Tracker for iPhone: AI meal scanning with LiDAR portioning, instant barcode scans, honest hydration tracking, and a collectible butterfly gallery that makes healthy habits feel like play.">
-<meta name="theme-color" content="#2e7d32">
+<meta name="description" content="Caterpillar Calorie Tracker for iPhone: snap your plate, scan a barcode, and watch a little caterpillar grow as your day fills up. Honest numbers, Australian food first, and a butterfly gallery you earn.">
+<meta name="theme-color" content="#23a645">
 <link rel="icon" href="assets/appicon.png">
 <link rel="apple-touch-icon" href="assets/appicon-180.png">
 <meta property="og:title" content="Caterpillar: the calorie tracker that grows with you">
 <meta property="og:description" content="Snap your plate. Watch your caterpillar grow. An honest, Australian-first calorie tracker for iPhone.">
 <meta property="og:image" content="assets/appicon.png">
 <meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
   <a class="brand" href="index.html">
-    <img src="assets/appicon.png" alt="" width="30" height="30">Caterpillar
+    <img src="assets/appicon.png" alt="" width="34" height="34">Caterpillar
   </a>
   <a class="hide-sm" href="how-it-works.html">How it works</a>
   <a class="hide-sm" href="faq.html">FAQ</a>
   <a class="cta" href="#get">Get the app</a>
 </nav>
 
-<header class="hero">
-  <div class="wrap">
-    <span class="eyebrow">Made in Australia · iPhone</span>
-    <h1>Tracking calories shouldn't feel like <span class="accent">homework</span>.</h1>
-    <p class="sub">Every meal you log grows a little creature working its way
-    toward butterfly. Snap your plate, scan a barcode, and watch the day fill
-    up. No spreadsheets, no guilt, no nagging.</p>
+<header class="hero hero-home" style="--bg:url('assets/bg/forage-wide.webp')">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Made in Australia · iPhone</span>
+      <h1>Calorie tracking shouldn't feel like <span class="accent">homework</span></h1>
+      <p class="sub">Every meal you log grows a little caterpillar on its way to
+      butterfly. Snap your plate, scan a barcode, watch the day fill up. No
+      spreadsheets, no guilt, no nagging.</p>
 
-    <div class="cta-row">
-      <a class="btn btn-primary" href="#get">Get Caterpillar</a>
-      <a class="btn btn-ghost" href="how-it-works.html">See how it works</a>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#get">Get Caterpillar</a>
+        <a class="btn btn-ghost" href="how-it-works.html">See how it works</a>
+      </div>
+      <span class="store-note">Free to start · No ads, ever · Coming soon to the App&nbsp;Store</span>
+
+      <!-- The app's growth bar: 1,180 of 1,754 is 67%, which is 7 of the 11
+           segments a full day earns. -->
+      <div class="growth" aria-hidden="true">
+        <div class="cat" data-segments="7" data-full="11" data-max="44"></div>
+        <div class="growth-caption">
+          <span><b>1,180</b> cal logged</span>
+          <span>Budget 1,754 cal</span>
+        </div>
+      </div>
     </div>
-    <span class="store-note">Free to start · No ads, ever · Coming soon to the App&nbsp;Store</span>
 
-    <!-- The app's growth bar, rebuilt in CSS from the same artwork. It grows
-         once on load, which is the fastest way to explain the whole product. -->
-    <div class="growth" aria-hidden="true">
-      <div class="growth-track" id="growthTrack"></div>
-      <div class="growth-ground"></div>
-      <div class="growth-caption">
-        <span>1,180 cal logged</span>
-        <span>Budget 1,754 cal</span>
+    <div class="hero-stage" aria-hidden="true">
+      <div class="phone"><img src="assets/screens/garden.webp" alt="" width="603" height="1311"></div>
+      <div class="sticker s1">
+        <img src="assets/icon_aimealscan.png" alt="">
+        <div><b>Chicken and veg</b><span>298 kcal, logged</span></div>
+      </div>
+      <div class="sticker s2">
+        <img src="assets/cat/head-happy.png" alt="">
+        <div><b>Day completed!</b><span>Streak +1</span></div>
+      </div>
+      <div class="sticker s3">
+        <img src="assets/icon_gallery.png" alt="">
+        <div><b>Puzzle piece found</b><span>Garden Grazer</span></div>
       </div>
     </div>
   </div>
 </header>
 
+<div class="ticker-band"><div class="ticker" aria-label="Foods people log">
+  <div class="ticker-row">
+    <span>Weet-Bix</span><span>Flat white</span><span>Smashed avo</span>
+    <span>Chicken parmi</span><span>Tim Tams</span><span>Pad thai</span>
+    <span>Sushi rolls</span><span>Banana bread</span><span>Meat pie</span>
+    <span>Acai bowl</span><span>Fish and chips</span><span>Lamington</span>
+    <span aria-hidden="true">Weet-Bix</span><span aria-hidden="true">Flat white</span><span aria-hidden="true">Smashed avo</span>
+    <span aria-hidden="true">Chicken parmi</span><span aria-hidden="true">Tim Tams</span><span aria-hidden="true">Pad thai</span>
+    <span aria-hidden="true">Sushi rolls</span><span aria-hidden="true">Banana bread</span><span aria-hidden="true">Meat pie</span>
+    <span aria-hidden="true">Acai bowl</span><span aria-hidden="true">Fish and chips</span><span aria-hidden="true">Lamington</span>
+  </div>
+</div></div>
+
 <section>
   <div class="wrap">
+    <span class="kicker">Five ways in</span>
     <h2>Log a meal in seconds, not minutes</h2>
-    <p class="lede">Five ways in, all of them fast. Pick whichever suits the
-    moment. Caterpillar remembers your portions and habits either way.</p>
+    <p class="lede">Pick whichever suits the moment. Caterpillar remembers your
+    portions and habits either way.</p>
     <div class="grid">
       <div class="card reveal">
-        <img class="icon" src="assets/icon_aimealscan.png" alt="" width="54" height="54">
+        <img class="icon" src="assets/icon_aimealscan.png" alt="" width="72" height="72">
         <h3>Snap Your Plate</h3>
-        <p>Photograph your plate and Caterpillar identifies every component. On
-        Pro-model iPhones, LiDAR depth measures your actual portion, not a guess
-        from a stock photo. Tell it "130&nbsp;g pasta" and it takes your word for it.</p>
+        <p>Photograph your plate and Caterpillar finds every part of it. On
+        Pro-model iPhones, LiDAR measures your actual portion. Tell it
+        "130&nbsp;g pasta" and it takes your word for it.</p>
       </div>
       <div class="card reveal">
-        <img class="icon" src="assets/icon_barcodescan.png" alt="" width="54" height="54">
-        <h3>Instant barcode scans</h3>
+        <img class="icon" src="assets/icon_barcodescan.png" alt="" width="72" height="72">
+        <h3>Barcode scans</h3>
         <p>Point, beep, logged, with strong coverage of Woolies, Coles and Aldi.
-        Scan five things in a row with Log&nbsp;&amp;&nbsp;Scan&nbsp;Next. Every
-        scan becomes searchable forever after.</p>
+        Scan five things in a row with Log&nbsp;&amp;&nbsp;Scan&nbsp;Next.</p>
       </div>
       <div class="card reveal">
-        <img class="icon" src="assets/icon_menuscan.png" alt="" width="54" height="54">
+        <img class="icon" src="assets/icon_menuscan.png" alt="" width="72" height="72">
         <h3>Menu Scan</h3>
-        <p>Eating out? Photograph the menu and tap what you ordered. Portion each
+        <p>Eating out? Photograph the menu and tap what you ordered. Size each
         dish up or down so a pub lunch doesn't derail the day.</p>
       </div>
       <div class="card reveal">
-        <img class="icon" src="assets/icon_voiceinput.png" alt="" width="54" height="54">
+        <img class="icon" src="assets/icon_voiceinput.png" alt="" width="72" height="72">
         <h3>Just say it</h3>
-        <p>Talk your meal in while your hands are busy. Or type it. Australian
-        food data comes first, so "maccas" and "Weet-Bix" land where you expect.</p>
+        <p>Talk your meal in while your hands are busy, or type it. "Maccas" and
+        "Weet-Bix" land exactly where you'd expect.</p>
       </div>
       <div class="card reveal">
-        <img class="icon" src="assets/icon_favourites.png" alt="" width="54" height="54">
+        <img class="icon" src="assets/icon_favourites.png" alt="" width="72" height="72">
         <h3>Favourites that stick</h3>
-        <p>The things you eat every day are one tap from logged, at the portion
-        you actually have, mixed drinks and powders included.</p>
+        <p>The things you eat every day are one tap away, at the portion you
+        actually have. Mixed drinks and powders too.</p>
       </div>
       <div class="card reveal">
-        <img class="icon chip" src="assets/icon_gallery.png" alt="" width="54" height="54">
-        <h3>The Butterfly Gallery</h3>
-        <p>Healthy habits earn puzzle pieces that uncover collectible butterfly
-        artwork, including secrets you'll only find by living well.</p>
+        <img class="icon" src="assets/icon_myrecipes.png" alt="" width="72" height="72">
+        <h3>Your recipes</h3>
+        <p>Save your own, or share a recipe screenshot or web page straight into
+        the app. Send one to a friend and it lands in theirs.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="alt">
+<section class="panel" style="--bg:url('assets/bg/gallery-wide.webp')">
+  <div class="wrap center">
+    <span class="kicker">Real screens, straight from the app</span>
+    <h2>Have a look inside</h2>
+    <p class="lede">Bright, quick, and a little bit silly. The way logging food
+    should be.</p>
+    <div class="shots">
+      <figure class="shot reveal">
+        <div class="phone"><img src="assets/screens/snap.webp" alt="Snap Your Plate listing chicken, mixed vegetables and cucumber" width="603" height="1311" loading="lazy"></div>
+        <figcaption>Snap your plate<span>One photo, every ingredient</span></figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <div class="phone"><img src="assets/screens/forage.webp" alt="The Forage tab with five ways to log" width="603" height="1311" loading="lazy"></div>
+        <figcaption>Log it in seconds<span>Five ways to log</span></figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <div class="phone"><img src="assets/screens/inside.webp" alt="A chicken burger broken into its ingredients" width="603" height="1311" loading="lazy"></div>
+        <figcaption>See what's inside<span>Untick what you didn't eat</span></figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <div class="phone"><img src="assets/screens/gallery.webp" alt="The Caterpillar Collection of artwork cards" width="603" height="1311" loading="lazy"></div>
+        <figcaption>Unlock hidden artwork<span>36 achievements to find</span></figcaption>
+      </figure>
+    </div>
+    <p class="swipe-hint">Swipe for more</p>
+  </div>
+</section>
+
+<section>
   <div class="wrap">
+    <span class="kicker">No flattering numbers</span>
     <h2>A tracker that keeps you honest</h2>
     <p class="lede">Most apps quietly round in your favour, because a happy
     number keeps you opening the app. Caterpillar would rather be right.</p>
 
     <div class="split reveal">
-      <div class="art wide"><img src="assets/caterpillar_full_eating.png" alt="The caterpillar eating" width="324" height="134"></div>
+      <div class="art sun"><div class="cat" data-segments="6" data-full="6" data-head="eating" data-max="84" data-ground="none"></div></div>
       <div>
         <h3>Cooked, not dry</h3>
         <p>Pasta, rice and oats roughly triple in weight when you cook them. Log
@@ -117,49 +179,51 @@
     </div>
 
     <div class="split flip reveal">
-      <div class="art wide"><img src="assets/caterpillar_full.png" alt="The caterpillar, content" width="324" height="134"></div>
+      <div class="art sky has-phone"><div class="phone"><img src="assets/screens/hydration.webp" alt="The hydration screen: a dew drop, 1915 ml of a 1902 ml goal" width="603" height="1311" loading="lazy"></div></div>
       <div>
         <h3>Hydration that doesn't flatter you</h3>
         <p>A dew drop fills with everything you drink, coloured by what it
-        actually was. Coffee and tea count properly: the research says they
-        hydrate you about as well as water. Spirits don't: a neat nip takes
-        water back out of the drop, and you can see it happen.</p>
+        actually was. Coffee and tea count properly: they hydrate you about as
+        well as water. Spirits don't. A neat nip takes water back out of the
+        drop, and you can watch it happen.</p>
       </div>
     </div>
 
     <div class="split reveal">
-      <div class="art"><img src="assets/icon_barcodescan.png" alt="" width="128" height="128"></div>
+      <div class="art berry"><img src="assets/icon_barcodescan.png" alt="" width="160" height="160"></div>
       <div>
         <h3>Australian food, first</h3>
-        <p>Built on FSANZ food composition data, because Australian mince really
-        is leaner than the American figures most apps quietly use. Barcodes,
-        nutrition panels and a shared verified-food database that gets better
-        every time somebody scans something new.</p>
+        <p>Built on FSANZ food data, because Australian mince really is leaner
+        than the American figures most apps use. Barcodes, nutrition panels,
+        and a shared verified-food database that gets better every time
+        somebody scans something new.</p>
+        <div class="tags" style="--tint:var(--berry)"><span>Woolies</span><span>Coles</span><span>Aldi</span><span>IGA</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap center">
+    <span class="kicker">At a glance</span>
     <h2>Progress you can actually see</h2>
     <p class="lede">Most trackers give you a number. Caterpillar gives you a
     day you can read at a glance.</p>
     <div class="facts">
       <div class="fact reveal">
         <span class="n">Grows</span>
-        <p>Your caterpillar lengthens as the day fills, munches when you log and
-        sips when you drink.</p>
+        <p>Your caterpillar gets longer as the day fills. It munches when you
+        log and sips when you drink.</p>
       </div>
       <div class="fact reveal">
         <span class="n">Remembers</span>
-        <p>Sign in and your history, streaks and gallery follow you: new phone,
+        <p>Sign in and your history, streaks and gallery follow you. New phone,
         reinstall, next year.</p>
       </div>
       <div class="fact reveal">
         <span class="n">No ads</span>
-        <p>Nothing is sold, nothing is rented, and nothing follows you around
-        the internet.</p>
+        <p>Nothing sold, nothing rented, nothing following you around the
+        internet.</p>
       </div>
       <div class="fact reveal">
         <span class="n">Yours</span>
@@ -171,27 +235,20 @@
 </section>
 
 <section id="get">
-  <div class="wrap">
-    <div class="cta-banner">
-      <div class="parade" aria-hidden="true">
-        <img src="assets/caterpillar_walk_1.png" alt="">
-        <img src="assets/caterpillar_walk_2.png" alt="">
-        <img src="assets/caterpillar_walk_3.png" alt="">
-        <img src="assets/caterpillar_walk_2.png" alt="">
-        <img src="assets/caterpillar_head_happy.png" alt="">
-      </div>
-      <h2>Ready to grow?</h2>
-      <p>Free to start. No ads. Your data is yours, and you can take it with
-      you whenever you want.</p>
-      <a class="btn btn-primary" href="#">Download on the App Store</a>
-      <span class="store-note">Coming soon to iPhone · Requires iOS&nbsp;26</span>
-    </div>
+  <div class="panel cta-banner" style="--bg:url('assets/bg/garden-wide.webp')">
+    <!-- A full day: all 11 segments, the happy head. -->
+    <div class="cat center" data-segments="11" data-max="60" aria-hidden="true"></div>
+    <h2>Ready to grow?</h2>
+    <p>Free to start. No ads. Your data is yours, and you can take it with
+    you whenever you want.</p>
+    <a class="btn btn-primary" href="#">Download on the App Store</a>
+    <span class="store-note">Coming soon to iPhone · Requires iOS&nbsp;18 or later</span>
   </div>
 </section>
 
 <footer>
   <div class="marque">
-    <img src="assets/appicon.png" alt="" width="28" height="28">Caterpillar Calorie Tracker
+    <img src="assets/appicon.png" alt="" width="40" height="40">Caterpillar Calorie Tracker
   </div>
   <div class="links">
     <a href="how-it-works.html">How it works</a>
@@ -203,104 +260,6 @@
   © 2026 Caterpillar Calorie Tracker. Made in Australia.
 </footer>
 
-<script>
-// ── The growth bar ───────────────────────────────────────────────────────
-// Built here rather than written out as markup so the segment count is one
-// number to change, and so the overlap maths lives in one place instead of
-// being baked into a dozen inline styles.
-//
-// Geometry mirrors the in-app bar exactly: segments are 0.882 of the segment
-// height wide, overlap by 45%, and the head sits forward of the last segment
-// by the same 0.3-of-an-overlap nudge. Getting this wrong is what once made
-// the widget's caterpillar cover half its container.
-(function () {
-  var track = document.getElementById("growthTrack");
-  if (!track) return;
-
-  var SEGMENTS = 7;                       // 7 of 10 — a good day, not a full one
-  var FULL = 10;                          // a full bar, for sizing
-  var segW = 0.882, overlap = segW * 0.45, step = segW - overlap;
-
-  // Segment height derived from the MEASURED width, so a full 10-segment body
-  // would span the track exactly. A fixed size can only be right at one width:
-  // at 46px the body covered 36% of a 560px track and looked stranded — the
-  // same mistake the widget's caterpillar made before it was sized from its
-  // container. widthPerHeight = FULL*step + headW - overlap*0.3.
-  var widthPerHeight = FULL * step + 1.103 - overlap * 0.3;
-  function size() {
-    var w = track.clientWidth;
-    if (w > 0) track.parentElement.style.setProperty(
-      "--seg", (w / widthPerHeight).toFixed(2) + "px");
-  }
-  // Measured, not hardcoded — and measured more than once. The track can
-  // legitimately be zero-width the first time this runs (a background tab, a
-  // container that lays out late), and a single measurement would then leave
-  // the fallback size in place forever with no resize event to correct it.
-  //
-  // The observer is held in a variable deliberately: an unreferenced
-  // ResizeObserver is eligible for collection in some engines, which is
-  // exactly what happened here — the callback never fired and the caterpillar
-  // stayed at its fallback size.
-  size();
-  var ro = null;
-  if ("ResizeObserver" in window) {
-    ro = new ResizeObserver(size);
-    ro.observe(track);
-  }
-  window.addEventListener("resize", size, { passive: true });
-  window.addEventListener("load", size);
-
-  // The bounce travels tail-to-head at the app's own 0.045s per segment, so
-  // the body ripples rather than bobbing as one lump. The sprite cycle stays
-  // in phase across every segment — in the app all segments show the same
-  // walk frame at any instant; it's the BOUNCE that's staggered, not the legs.
-  var WAVE = 0.045;
-
-  function part(cls, leftMul, i) {
-    var el = document.createElement("span");
-    el.className = cls;
-    el.style.left = "calc(var(--seg) * " + leftMul.toFixed(4) + ")";
-    el.style.animationDelay = (i * 0.055).toFixed(3) + "s";   // grow-in only
-    var art = document.createElement("i");
-    // walk delay 0 = every segment in the same stride; bob delay = the wave.
-    art.style.animationDelay = cls === "seg"
-      ? "0s, " + (i * WAVE).toFixed(3) + "s"
-      : (i * WAVE).toFixed(3) + "s";
-    el.appendChild(art);
-    return el;
-  }
-
-  for (var i = 0; i < SEGMENTS; i++) {
-    var s = part("seg", i * step, i);
-    s.style.zIndex = String(i);
-    track.appendChild(s);
-  }
-  track.appendChild(part("head", SEGMENTS * step - overlap * 0.3, SEGMENTS));
-})();
-
-// ── Scroll reveal ────────────────────────────────────────────────────────
-// Progressive enhancement: the .reveal class only hides content once we know
-// IntersectionObserver is available to bring it back. Without this guard an
-// old browser would render a page of invisible cards.
-(function () {
-  var items = document.querySelectorAll(".reveal");
-  if (!("IntersectionObserver" in window) ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    items.forEach(function (el) { el.classList.add("in"); });
-    return;
-  }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      e.target.classList.add("in");
-      io.unobserve(e.target);
-    });
-  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-  items.forEach(function (el, i) {
-    el.style.transitionDelay = (Math.min(i, 5) * 0.055).toFixed(3) + "s";
-    io.observe(el);
-  });
-})();
-</script>
+<script src="site.js" defer></script>
 </body>
 </html>

@@ -5,23 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>How Caterpillar works: from first scan to butterfly</title>
 <meta name="description" content="The whole Caterpillar loop: an honest calorie target, five ways to log a meal, a garden that responds, and a gallery you earn.">
-<meta name="theme-color" content="#2e7d32">
+<meta name="theme-color" content="#23a645">
 <link rel="icon" href="assets/appicon.png">
 <link rel="apple-touch-icon" href="assets/appicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
   <a class="brand" href="index.html">
-    <img src="assets/appicon.png" alt="" width="30" height="30">Caterpillar
+    <img src="assets/appicon.png" alt="" width="34" height="34">Caterpillar
   </a>
   <a class="hide-sm" href="how-it-works.html">How it works</a>
   <a class="hide-sm" href="faq.html">FAQ</a>
   <a class="cta" href="index.html#get">Get the app</a>
 </nav>
 
-<header class="hero">
+<header class="hero" style="--bg:url('assets/bg/onboarding-wide.webp')">
   <div class="wrap">
     <span class="eyebrow">The whole loop</span>
     <h1>From first scan to <span class="accent">butterfly</span></h1>
@@ -34,9 +37,10 @@
   <div class="wrap">
 
     <div class="split reveal">
-      <div class="art wide"><img src="assets/caterpillar_full.png" alt="" width="324" height="134"></div>
+      <div class="art"><div class="cat" data-segments="3" data-full="4" data-max="96" data-ground="none" aria-hidden="true"></div></div>
       <div>
-        <h3>1 · Tell it where you're headed</h3>
+        <span class="step-no" style="--tint:var(--leaf)">1</span>
+        <h3>Tell it where you're headed</h3>
         <p>A short onboarding builds your plan: current stats, goal weight
         (lose, maintain or gain, your call), activity level, and how much of your
         exercise you want to earn back as food. Caterpillar computes a daily
@@ -46,9 +50,10 @@
     </div>
 
     <div class="split flip reveal">
-      <div class="art"><img src="assets/icon_aimealscan.png" alt="" width="132" height="132"></div>
+      <div class="art tangerine has-phone"><div class="phone"><img src="assets/screens/forage.webp" alt="The Forage tab with five ways to log" width="603" height="1311" loading="lazy"></div></div>
       <div>
-        <h3>2 · Log the way that suits the moment</h3>
+        <span class="step-no" style="--tint:var(--tangerine)">2</span>
+        <h3>Log the way that suits the moment</h3>
         <p><strong>Cooked a meal?</strong> Snap Your Plate photographs the plate,
         and on supported iPhones LiDAR measures real portion volume rather than
         guessing. <strong>Packaged food?</strong> The scanner reads the nutrition
@@ -61,9 +66,10 @@
     </div>
 
     <div class="split reveal">
-      <div class="art wide"><img src="assets/caterpillar_full_eating.png" alt="" width="324" height="134"></div>
+      <div class="art sky has-phone"><div class="phone"><img src="assets/screens/garden.webp" alt="The Garden tab: the caterpillar, macros, steps and water" width="603" height="1311" loading="lazy"></div></div>
       <div>
-        <h3>3 · Watch the garden respond</h3>
+        <span class="step-no" style="--tint:var(--sky)">3</span>
+        <h3>Watch the garden respond</h3>
         <p>Your caterpillar eats when you log, drinks when you hydrate, and
         lengthens as the day fills. The dew drop fills with every drink, each one
         coloured by what it actually was and counted at its real hydration value.
@@ -73,9 +79,10 @@
     </div>
 
     <div class="split flip reveal">
-      <div class="art"><img src="assets/icon_gallery.png" alt="" width="110" height="110"></div>
+      <div class="art grape has-phone"><div class="phone"><img src="assets/screens/gallery.webp" alt="The Caterpillar Collection of artwork cards" width="603" height="1311" loading="lazy"></div></div>
       <div>
-        <h3>4 · Earn your gallery</h3>
+        <span class="step-no" style="--tint:var(--grape)">4</span>
+        <h3>Earn your gallery</h3>
         <p>Consistency unlocks puzzle pieces, and puzzle pieces reveal
         collectible butterfly artwork across Wood, Silver, Gold and Diamond
         tiers, plus secret achievements you'll only find by living well. Streak
@@ -84,9 +91,10 @@
     </div>
 
     <div class="split reveal">
-      <div class="art"><img src="assets/appicon.png" alt="" width="128" height="128" style="border-radius:24px"></div>
+      <div class="art sun"><img class="appicon" src="assets/appicon.png" alt="" width="160" height="160"></div>
       <div>
-        <h3>5 · Keep it forever</h3>
+        <span class="step-no" style="--tint:var(--berry)">5</span>
+        <h3>Keep it forever</h3>
         <p>Sign in with Apple, Google or an email address and everything
         (history, streaks, gallery, favourites, settings) is backed up to your
         account. New phone or a reinstall, one sign-in brings it all home. Export
@@ -127,27 +135,19 @@
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="cta-banner">
-      <div class="parade" aria-hidden="true">
-        <img src="assets/caterpillar_walk_1.png" alt="">
-        <img src="assets/caterpillar_walk_2.png" alt="">
-        <img src="assets/caterpillar_walk_3.png" alt="">
-        <img src="assets/caterpillar_walk_2.png" alt="">
-        <img src="assets/caterpillar_head_happy.png" alt="">
-      </div>
+<section id="get">
+    <div class="panel cta-banner" style="--bg:url('assets/bg/garden-wide.webp')">
+      <div class="cat center" data-segments="11" data-max="60" aria-hidden="true"></div>
       <h2>See it for yourself</h2>
       <p>The best way to understand Caterpillar is to feed it.</p>
       <a class="btn btn-primary" href="index.html#get">Get Caterpillar</a>
-      <span class="store-note">Free to start · Coming soon to iPhone</span>
+      <span class="store-note">Free to start · Coming soon to iPhone · iOS&nbsp;18 or later</span>
     </div>
-  </div>
 </section>
 
 <footer>
   <div class="marque">
-    <img src="assets/appicon.png" alt="" width="28" height="28">Caterpillar Calorie Tracker
+    <img src="assets/appicon.png" alt="" width="40" height="40">Caterpillar Calorie Tracker
   </div>
   <div class="links">
     <a href="how-it-works.html">How it works</a>
@@ -159,23 +159,6 @@
   © 2026 Caterpillar Calorie Tracker. Made in Australia.
 </footer>
 
-<script>
-(function () {
-  var items = document.querySelectorAll(".reveal");
-  if (!("IntersectionObserver" in window) ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    items.forEach(function (el) { el.classList.add("in"); });
-    return;
-  }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      e.target.classList.add("in");
-      io.unobserve(e.target);
-    });
-  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-  items.forEach(function (el) { io.observe(el); });
-})();
-</script>
+<script src="site.js" defer></script>
 </body>
 </html>

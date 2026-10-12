@@ -6,16 +6,25 @@
 <title>A recipe shared from Caterpillar</title>
 <meta name="description" content="A recipe shared from Caterpillar Calorie Tracker. Add it to the app in one tap.">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#2e7d32">
+<meta name="theme-color" content="#23a645">
 <link rel="icon" href="assets/appicon.png">
 <link rel="apple-touch-icon" href="assets/appicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&display=swap">
 <link rel="stylesheet" href="style.css">
 <style>
   .recipe { max-width: 720px; }
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0 26px; }
-  .stat { background: var(--surface-2); border-radius: 14px; padding: 12px 8px; text-align: center; }
-  .stat b { display: block; font-size: 1.35rem; }
-  .stat span { font-size: .8rem; color: var(--ink-faint); }
+  .stat { --tint: var(--sun); background: color-mix(in srgb, var(--tint) 16%, var(--surface));
+          border: 2px solid color-mix(in srgb, var(--tint) 35%, transparent);
+          border-radius: 20px; padding: 14px 8px; text-align: center; }
+  .stat:nth-child(2) { --tint: var(--berry); }
+  .stat:nth-child(3) { --tint: var(--sky); }
+  .stat:nth-child(4) { --tint: var(--leaf); }
+  .stat b { display: block; font: 700 1.6rem/1.1 var(--font-display); }
+  .stat span { font-size: .8rem; font-weight: 700; color: var(--ink-faint); }
+  @media (max-width: 520px) { .stats { grid-template-columns: repeat(2, 1fr); } }
   .ingredients { list-style: none; padding: 0; margin: 0 0 26px; }
   .ingredients li { display: flex; justify-content: space-between; gap: 12px;
                     padding: 10px 0; border-bottom: 1px solid var(--surface-2); }
@@ -30,13 +39,13 @@
 
 <nav>
   <a class="brand" href="index.html">
-    <img src="assets/appicon.png" alt="" width="30" height="30">Caterpillar
+    <img src="assets/appicon.png" alt="" width="34" height="34">Caterpillar
   </a>
   <a class="hide-sm" href="how-it-works.html">How it works</a>
   <a class="cta" href="index.html#get">Get the app</a>
 </nav>
 
-<header class="hero">
+<header class="hero" style="--bg:url('assets/bg/cocoon-wide.webp')">
   <div class="wrap">
     <span class="eyebrow">Shared recipe</span>
     <h1 id="name">A recipe for you</h1>
@@ -68,7 +77,7 @@
 
 <footer>
   <div class="marque">
-    <img src="assets/appicon.png" alt="" width="28" height="28">Caterpillar Calorie Tracker
+    <img src="assets/appicon.png" alt="" width="40" height="40">Caterpillar Calorie Tracker
   </div>
   <div class="links">
     <a href="how-it-works.html">How it works</a>
@@ -126,5 +135,6 @@
   document.getElementById("add").href = "caterpillar://recipe#r1." + payload;
 })();
 </script>
+<script src="site.js" defer></script>
 </body>
 </html>
