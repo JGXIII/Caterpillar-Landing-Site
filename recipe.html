@@ -33,6 +33,15 @@
   .steps li { margin-bottom: .7em; }
   .credit { color: var(--ink-faint); font-size: .9rem; }
   #missing { display: none; }
+  /* Messenger, Instagram and Facebook open links in their own browser, which
+     won't hand a caterpillar:// link to the app. Say what to do instead. */
+  .inapp { display: none; max-width: 46ch; margin: 18px auto 0; text-align: left;
+           background: var(--surface); border: 2px solid color-mix(in srgb, var(--sun) 50%, var(--line));
+           border-radius: 18px; padding: 14px 18px; font-size: .95rem; font-weight: 600; color: var(--ink-soft); }
+  .inapp.show { display: block; }
+  .inapp b { color: var(--ink); }
+  .inapp button { margin-top: 10px; font: 700 .95rem/1 var(--font-display); border: 0; cursor: pointer;
+                  padding: 10px 16px; border-radius: 999px; background: var(--surface-2); color: var(--ink); }
 </style>
 </head>
 <body>
@@ -55,6 +64,12 @@
       <a class="btn btn-ghost" href="index.html#get">Get Caterpillar</a>
     </div>
     <span class="store-note">Opens Caterpillar on your iPhone, ready to check and save.</span>
+    <div class="inapp" id="inapp">
+      <b>Nothing happened?</b> This app's built-in browser can't open
+      Caterpillar. Tap the menu, choose <b>Open in Safari</b>, then tap Add to
+      Caterpillar again.
+      <br><button type="button" id="copy">Copy link</button>
+    </div>
   </div>
 </header>
 
@@ -133,6 +148,21 @@
   }
   if (r.sourceCredit) text("credit", `Recipe from ${r.sourceCredit}.`);
   document.getElementById("add").href = "caterpillar://recipe#r1." + payload;
+
+  // In-app browsers (Messenger, Instagram, Facebook) swallow the app link.
+  // Recognised ones get the hint straight away; any other browser gets it
+  // if tapping Add left us still on this page a moment later.
+  const hint = document.getElementById("inapp");
+  if (/FBAN|FBAV|FB_IAB|FBIOS|Messenger|Instagram|Line\//i.test(navigator.userAgent)) {
+    hint.classList.add("show");
+  }
+  document.getElementById("add").addEventListener("click", () => {
+    setTimeout(() => { if (!document.hidden) hint.classList.add("show"); }, 1600);
+  });
+  document.getElementById("copy").addEventListener("click", async (e) => {
+    try { await navigator.clipboard.writeText(location.href); e.target.textContent = "Copied"; }
+    catch (_) { e.target.textContent = "Press and hold the address to copy"; }
+  });
 })();
 </script>
 <script src="site.js" defer></script>

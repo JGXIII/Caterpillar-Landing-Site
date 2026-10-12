@@ -436,7 +436,7 @@ body > nav .cta:hover { transform: translateY(-1px); }
 }
 .ticker-row {
   display: flex; gap: 14px; width: max-content;
-  animation: ticker 38s linear infinite;
+  animation: ticker 70s linear infinite;
 }
 .ticker span {
   font: 600 1.08rem/1 var(--font-display); white-space: nowrap;
