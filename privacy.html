@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Caterpillar — Privacy Policy</title>
-<meta name="description" content="Privacy Policy for Caterpillar Calorie Tracker — what we collect, what stays on your device, and how to delete it.">
+<title>Caterpillar Privacy Policy</title>
+<meta name="description" content="Privacy Policy for Caterpillar Calorie Tracker: what we collect, what stays on your device, and how to delete it.">
 <meta name="theme-color" content="#2e7d32">
 <link rel="icon" href="assets/appicon.png">
 <link rel="apple-touch-icon" href="assets/appicon-180.png">
@@ -56,18 +56,21 @@
     foods, hydration entries and settings live on your iPhone.</li>
     <li>Meal-scan photos are kept as small compressed copies on-device for your
     timeline.</li>
-    <li>Apple Health data (steps, energy, exercise, weight, water) is read and
-    written only with your permission, on-device, via HealthKit. Note that your
-    day summaries — which can include step and energy totals — form part of your
-    cloud backup if you are signed in.</li>
+    <li>Apple Health data (steps, energy, exercise, sleep, weight, water) is
+    read and written only with your permission, on-device, via HealthKit. Note
+    that your day summaries (which can include step and energy totals, and the
+    hours of sleep shown in a daily check-in) form part of your cloud backup if
+    you are signed in.</li>
   </ul>
 
   <h2 id="s2">2. Data backed up to your account</h2>
   <p>We back up your tracking data so it survives reinstalls and device changes:
   day history, achievements and gallery progress, streaks, hydration entries,
-  favourites and custom foods, weight entries (numbers and notes — not progress
-  photos), your drink list, learned food preferences, your profile details from
-  onboarding, and app settings. This is stored with our backend provider
+  favourites and custom foods, weight entries (numbers and notes, not progress
+  photos), daily check-ins (hunger, sleep and notes), any macro targets you
+  entered from a coach, your spreadsheet column layout, your drink list,
+  learned food preferences, your profile details from onboarding, and app
+  settings. This is stored with our backend provider
   (Supabase) and protected by row-level security, so only your authenticated
   account can read or write your rows.</p>
 
@@ -76,23 +79,23 @@
   phone. You can create one three ways:</p>
   <ul>
     <li><strong>Sign in with Apple.</strong> We receive an anonymous Apple
-    identifier and, on first sign-in only, the name and email you approve —
+    identifier and, on first sign-in only, the name and email you approve,
     which may be Apple's private relay address. We never see your Apple ID
     password.</li>
     <li><strong>Sign in with Google.</strong> We receive your Google account
     identifier and email address. We never see your Google password.</li>
     <li><strong>Email and password.</strong> Your email address is stored, and
-    your password is handled and hashed by our authentication provider — it is
+    your password is handled and hashed by our authentication provider. It is
     never stored by us in a readable form and never leaves your device in the
     clear. Password resets are sent to that address.</li>
   </ul>
 
   <h2 id="s4">4. AI photo and text analysis</h2>
-  <p>When you use AI Meal Scan, Menu Scan or a nutrition-label scan, your photo
+  <p>When you use Snap Your Plate, Menu Scan or a nutrition-label scan, your photo
   (compressed) is sent over an encrypted connection through our server function
   to our AI provider (Google's Gemini API) solely to generate the nutrition
   analysis. Optional numeric portion measurements derived on-device from LiDAR
-  travel with it — never raw depth data. The result is returned to your device.
+  travel with it, never raw depth data. The result is returned to your device.
   If you use "Ask AI" or voice input, the text or audio of what you asked is
   processed the same way. We do not build advertising profiles from any of it.</p>
   <p>Requests are rate-limited per device to keep the shared service usable.
@@ -100,8 +103,8 @@
   tied to your identity.</p>
 
   <h2 id="s5">5. Food search</h2>
-  <p>Search queries are sent to food databases — our own curated database, plus
-  Open Food Facts, USDA and Australian government datasets via our server — to
+  <p>Search queries are sent to food databases (our own curated database, plus
+  Open Food Facts, USDA and Australian government datasets via our server) to
   return results. Queries are used to answer the search and are not linked to
   your account.</p>
 
@@ -109,14 +112,14 @@
   <ul>
     <li>Food submissions and corrections you choose to make are sent to us for
     review and may be shared with other users once approved. <strong>The photos
-    you took as evidence are sent and stored with the submission</strong> — up to
-    three of them (nutrition panel, barcode, front of pack) — so a human can
+    you took as evidence are sent and stored with the submission</strong>, up to
+    three of them (nutrition panel, barcode, front of pack), so a human can
     check the values against the actual packaging. Don't include anything in
     frame you wouldn't want a moderator to see.</li>
     <li>When you scan a nutrition label and the reading is verified against the
     product, the product's name, brand and nutrition values are added to
     Caterpillar's shared verified-food database so other users benefit, together
-    with those same evidence photos. Only product facts are shared — never
+    with those same evidence photos. Only product facts are shared, never
     anything identifying you.</li>
     <li>The app sends anonymous, device-scoped reliability signals (a random
     install identifier and, for example, "this device received this food
@@ -125,17 +128,18 @@
   </ul>
 
   <h2 id="s7">7. Anonymous usage analytics</h2>
-  <p>Caterpillar records which features are used — that a meal was logged, that
-  a paywall was shown, that onboarding finished — so we can tell what is working
+  <p>Caterpillar records which features are used (that a meal was logged, that
+  a paywall was shown, that onboarding finished) so we can tell what is working
   and what isn't. This is deliberately built so it cannot identify you:</p>
   <ul>
     <li>Events are keyed to a <strong>random identifier generated once per
     install</strong>. It is not your account id, email, Apple ID or device id,
     and it is never sent anywhere else. Deleting the app ends that identity
     permanently.</li>
-    <li>No content is ever recorded — not a search query, not a food name, not a
-    weight, not a photo. Only small enumerated facts, such as which scan type a
-    meal came from.</li>
+    <li>No content is ever recorded: not a search query, not a food name, not a
+    weight, not a photo, not a note. Only small facts, such as which scan type a
+    meal came from, which settings are switched on, and the 1 to 10 hunger
+    and sleep ratings from the optional daily check-in.</li>
     <li>You can turn it off in the app, and nothing further is sent.</li>
   </ul>
 
@@ -146,7 +150,7 @@
 
   <h2 id="s9">9. Importing and exporting</h2>
   <p>If you import history from another tracker, you pick the file yourself and
-  it is read entirely on your device — we don't browse your files and the file
+  it is read entirely on your device. We don't browse your files and the file
   isn't uploaded anywhere. The meals, weigh-ins, water and activity it contains
   then become part of your own history, and your cloud backup if you're signed
   in, exactly like data you logged in Caterpillar.</p>
@@ -155,14 +159,14 @@
 
   <h2 id="s10">10. Notifications</h2>
   <p>Notifications are optional and off until you allow them. Reminders are
-  scheduled and delivered on your device — their content, meaning what you have
+  scheduled and delivered on your device. Their content, meaning what you have
   or haven't logged, is never sent to a server to generate them.</p>
 
   <h2 id="s11">11. What we don't do</h2>
   <ul>
     <li>No advertising, no ad SDKs, no third-party analytics or attribution
     trackers.</li>
-    <li>No selling or renting personal information — ever.</li>
+    <li>No selling or renting personal information, ever.</li>
     <li>No reading your Apple Health data off your device beyond the day
     summaries described in section 1.</li>
   </ul>
@@ -171,8 +175,8 @@
   <p>Cloud data is kept while your account exists. Delete your account in-app
   (Nest → Delete Account) and your request is actioned within 48 hours,
   permanently removing your cloud data. Deleting the app removes all local data
-  immediately. Contributions already approved into the shared food database —
-  which contain product facts, not personal information — remain, as other users
+  immediately. Contributions already approved into the shared food database
+  (which contain product facts, not personal information) remain, as other users
   rely on them. You can also email us to exercise access or correction rights
   under the Australian Privacy Principles.</p>
 

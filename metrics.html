@@ -74,6 +74,16 @@
 
   .empty { color: var(--text-3); font-size: 14px; padding: 6px 0; }
   .note { color: var(--text-3); font-size: 13px; }
+  .grid2 { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .card h3 { margin: 0 0 12px; font-size: 15px; }
+  details { border-top: 1px solid var(--line); padding: 10px 0; }
+  details:first-child { border-top: none; }
+  summary { cursor: pointer; font-size: 14px; }
+  summary code { font-size: 13px; }
+  .vals { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 2px; }
+  .vals span { font-size: 12.5px; padding: 3px 9px; border-radius: 10px;
+               background: var(--surface-2, rgba(127,127,127,.12)); }
+  .propname { color: var(--text-2); font-size: 12.5px; margin-top: 8px; }
   code { background: var(--surface-2); padding: 1px 5px; border-radius: 5px; font-size: 12.5px; }
 </style>
 </head>
@@ -124,6 +134,53 @@
     strongest upgrade pitch — it's the feature people reach for and can't have.
   </p>
 </div>
+
+<h2>Onboarding: where people drop out</h2>
+<div class="card"><div class="bars" id="funnel"></div>
+  <p class="note" style="margin:14px 0 0">Installs that reached each screen. A big
+  step down between two screens is the one to look at.</p>
+</div>
+
+<h2>Where people spend their time</h2>
+<div class="grid2">
+  <div class="card"><h3>Tabs opened</h3><div class="bars" id="tabs"></div></div>
+  <div class="card"><h3>Wrap Up Today: within budget?</h3><div class="bars" id="wraps"></div>
+    <p class="note" style="margin:12px 0 0">"true" means the day finished inside budget.</p></div>
+</div>
+
+<h2>Hunger and sleep check-ins</h2>
+<div class="grid2">
+  <div class="card"><h3>Hunger (1 = barely, 10 = constantly; 0 = skipped)</h3><div class="bars" id="hunger"></div></div>
+  <div class="card"><h3>Sleep (1 = badly, 10 = really well; 0 = skipped)</h3><div class="bars" id="sleep"></div></div>
+</div>
+
+<h2>Pro features in use</h2>
+<div class="card scroll">
+  <table>
+    <thead><tr><th>Feature</th><th class="num">Times</th><th class="num">Installs</th><th class="num">From Pro</th></tr></thead>
+    <tbody id="pro"></tbody>
+  </table>
+</div>
+
+<h2>Where it goes wrong</h2>
+<div class="grid2">
+  <div class="card"><h3>Failed scans and lookups</h3><div class="bars" id="failKind"></div></div>
+  <div class="card"><h3>Why they failed</h3><div class="bars" id="failReason"></div></div>
+  <div class="card"><h3>Searches by number of results</h3><div class="bars" id="searchResults"></div>
+    <p class="note" style="margin:12px 0 0">"0" is a search that found nothing.</p></div>
+  <div class="card"><h3>Edits to logged meals</h3><div class="bars" id="edits"></div>
+    <p class="note" style="margin:12px 0 0">Lots of amount edits on photo meals means the scans are off.</p></div>
+</div>
+
+<h2>Settings</h2>
+<div class="grid2">
+  <div class="card"><h3>Changed most often</h3><div class="bars" id="changed"></div></div>
+  <div class="card scroll"><h3>Where everyone's settings sit (installs)</h3>
+    <table><tbody id="settings"></tbody></table></div>
+</div>
+
+<h2>Every event, in detail</h2>
+<div class="card" id="details"></div>
 
 <h2>Every tracked event</h2>
 <div class="card scroll">
@@ -189,16 +246,44 @@ const MEANING = {
   paywall_shown:        "The paywall appeared, with the reason that triggered it.",
   paywall_purchased:    "Someone subscribed. Against paywall_shown, this is your conversion rate.",
   achievement_unlocked: "Earned a puzzle piece or butterfly.",
-  reminder_opened:      "Opened the app from a notification. Tells you whether the nudges actually work."
+  reminder_opened:      "Opened the app by tapping a notification, split by kind (hydration, meal, check_in, weekly_review). Tells you whether the nudges actually work. Before 27 Sep 2026 this counted widget taps instead, so older numbers here are widget opens.",
+  widget_opened:        "Opened the app by tapping the home-screen widget. Counted as reminder_opened until 27 Sep 2026.",
+  memory_offer_used:    "Accepted a Caterpillar Memory suggestion. The server was dropping these until 27 Sep 2026, so there is no earlier history.",
+  tab_viewed:           "Switched to a tab. From Oct 2026.",
+  checkin_saved:        "Saved the hunger and sleep check-in. The taps, and whether a note was written (never the note).",
+  setting_changed:      "Changed a setting after onboarding. Which one, and its new value.",
+  settings_snapshot:    "Once a day per install, where every setting sits. Shown under Settings, not counted as activity.",
+  meal_edited:          "Changed a logged meal: amount, ingredients, mixer or meal type.",
+  meal_deleted:         "Deleted a logged meal.",
+  scan_failed:          "A scan, barcode lookup or recipe import didn't work.",
+  day_reopened:         "Logged into a day after wrapping it up.",
+  cocoon_used:          "A Safety Cocoon was spent: auto, manual or the one-time gift.",
+  goal_changed:         "The calorie goal changed, and from where (editor, typed, weekly review, calibration, coach).",
+  share_import:         "Something arrived through the share sheet.",
+  paywall_dismissed:    "Closed the paywall or the App Store sheet without buying."
 };
 
 const LABELS = {
   manual: "Manual", manual_entry: "Typed in by hand", barcode: "Barcode scan",
-  favourite: "Favourites", ai_scan: "AI meal scan", menu_scan: "Menu scan",
-  label_scan: "Nutrition label", hydration: "Drink log"
+  favourite: "Favourites", ai_scan: "Snap Your Plate", menu_scan: "Menu scan",
+  label_scan: "Nutrition label", hydration: "Drink log",
+  meal: "Meal reminder", check_in: "Daily check-in", weekly_review: "Weekly review",
+  copy: "Logged again"
 };
 
 const fmt = n => (n ?? 0).toLocaleString();
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+
+/// Bars in a fixed order (a 1-10 scale reads wrong sorted by size).
+function barsOrdered(el, obj, emptyMsg) {
+  const entries = Object.entries(obj || {}).sort((a, b) => Number(a[0]) - Number(b[0]));
+  if (!entries.length) { el.innerHTML = `<p class="empty">${emptyMsg}</p>`; return; }
+  const max = Math.max(...entries.map(e => e[1])) || 1;
+  el.innerHTML = entries.map(([k, v]) => `
+    <div class="bar-row"><span class="bar-label">${esc(k)}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(2, v / max * 100)}%"></div></div>
+      <span class="bar-val">${fmt(v)}</span></div>`).join("");
+}
 const pretty = k => LABELS[k] || k.replace(/_/g, " ").replace(/^./, c => c.toUpperCase());
 let days = 30;
 
@@ -229,6 +314,7 @@ function render(d) {
              + (d.event_counts?.label_scan  ?? 0) * 0.00187
              + (d.event_counts?.ai_search   ?? 0) * 0.00090;
 
+  const pct = r => r && r.eligible ? `${Math.round(r.returned / r.eligible * 100)}%` : "n/a";
   const tile = (n, k, note) =>
     `<div class="tile"><div class="n">${n}</div><div class="k">${k}</div><div class="d">${note}</div></div>`;
 
@@ -239,6 +325,12 @@ function render(d) {
     tile(fmt(aiCalls), "AI calls", `Estimated spend US$${cost.toFixed(2)} over the window.`),
     tile(shown ? `${(bought / shown * 100).toFixed(1)}%` : "—", "Paywall conversion",
          shown ? `${fmt(bought)} of ${fmt(shown)} paywall views.` : "No paywall views yet."),
+    tile(pct(d.retention?.d1), "Came back next day",
+         `${fmt(d.retention?.d1?.returned)} of ${fmt(d.retention?.d1?.eligible)} installs were back a day or more after their first.`),
+    tile(pct(d.retention?.d7), "Came back after a week",
+         `${fmt(d.retention?.d7?.returned)} of ${fmt(d.retention?.d7?.eligible)} installs old enough to tell.`),
+    tile(d.total_installs ? `${Math.round((d.installs_per_event?.day_wrapped ?? 0) / d.total_installs * 100)}%` : "n/a",
+         "Use Wrap Up Today", "Share of active installs that wrapped up at least one day."),
     tile(fmt(d.total_events), "Events", "Everything recorded in the window.")
   ].join("");
 
@@ -255,6 +347,48 @@ function render(d) {
     document.getElementById("spark-from").textContent = daily[0][0];
     document.getElementById("spark-to").textContent = daily[daily.length - 1][0];
   }
+
+  const P = d.props || {};
+  const pv = (ev, key) => (P[ev] || {})[key] || {};
+  const $ = id => document.getElementById(id);
+  bars($("funnel"), d.onboarding_funnel, "No onboarding yet.");
+  bars($("tabs"), pv("tab_viewed", "tab"), "No tab data yet.");
+  bars($("wraps"), pv("day_wrapped", "within_budget"), "No wrap-ups yet.");
+  barsOrdered($("hunger"), pv("checkin_saved", "hunger"), "No check-ins yet.");
+  barsOrdered($("sleep"), pv("checkin_saved", "sleep"), "No check-ins yet.");
+  bars($("failKind"), pv("scan_failed", "kind"), "Nothing has failed yet.");
+  bars($("failReason"), pv("scan_failed", "reason"), "Nothing has failed yet.");
+  bars($("searchResults"), pv("search_performed", "results"), "No searches yet.");
+  const edits = {};
+  for (const [k, v] of Object.entries(pv("meal_edited", "change"))) edits["edited: " + k] = v;
+  for (const [k, v] of Object.entries(pv("meal_edited", "photo"))) edits["edited, photo meal = " + k] = v;
+  for (const [k, v] of Object.entries(pv("meal_deleted", "photo"))) edits["deleted, photo meal = " + k] = v;
+  bars($("edits"), edits, "No edits yet.");
+  bars($("changed"), pv("setting_changed", "setting"), "Nobody has changed a setting yet.");
+
+  const settingRows = Object.entries(d.settings || {}).sort((a, b) => a[0].localeCompare(b[0]));
+  $("settings").innerHTML = settingRows.length
+    ? settingRows.map(([name, vals]) => `<tr><td><code>${esc(name)}</code></td><td>`
+        + Object.entries(vals).sort((a, b) => b[1] - a[1])
+            .map(([v, n]) => `${esc(v)} <strong>${fmt(n)}</strong>`).join(" · ")
+        + `</td></tr>`).join("")
+    : `<tr><td class="empty">No snapshots yet.</td></tr>`;
+
+  const proEvents = ["ai_meal_scan", "menu_scan", "label_scan", "ai_search", "voice_search",
+                     "recipe_import", "share_import", "memory_offer_used"];
+  $("pro").innerHTML = proEvents.map(ev => {
+    const n = d.event_counts?.[ev] ?? 0, pro = d.pro_event_counts?.[ev] ?? 0;
+    return `<tr><td><code>${ev}</code></td><td class="num">${fmt(n)}</td>
+      <td class="num">${fmt(d.installs_per_event?.[ev] ?? 0)}</td>
+      <td class="num">${n ? Math.round(pro / n * 100) + "%" : "n/a"}</td></tr>`;
+  }).join("");
+
+  $("details").innerHTML = Object.keys(P).sort().map(ev => `
+    <details><summary><code>${esc(ev)}</code> <span class="note">${esc(MEANING[ev] || "")}</span></summary>
+      ${Object.entries(P[ev]).map(([k, vals]) => `<div class="propname">${esc(k)}</div><div class="vals">`
+        + Object.entries(vals).sort((a, b) => b[1] - a[1]).slice(0, 30)
+            .map(([v, n]) => `<span>${esc(v)}: ${fmt(n)}</span>`).join("") + `</div>`).join("")}
+    </details>`).join("") || `<p class="empty">Nothing yet.</p>`;
 
   bars(document.getElementById("sources"), d.meal_sources, "No meals logged yet.");
   bars(document.getElementById("paywall"), d.paywall_reasons, "The paywall hasn't been shown yet.");
