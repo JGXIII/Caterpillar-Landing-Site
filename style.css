@@ -799,3 +799,11 @@ footer .links a:hover { color: #fff; text-decoration: underline; }
 @media (prefers-color-scheme: dark) {
   .hero .sub { color: var(--ink); text-shadow: 0 1px 12px rgba(0,0,0,.5); }
 }
+
+/* The Collection on the home page: three numbered steps beside the gallery
+   screenshot, reusing the How it works badges. */
+.puzzle-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+.puzzle-steps li { display: grid; grid-template-columns: 52px 1fr; gap: 18px; align-items: start; }
+.puzzle-steps .step-no { margin-bottom: 0; }
+.puzzle-steps h3 { font-size: clamp(1.2rem, 2vw, 1.45rem); margin: 4px 0 4px; }
+.puzzle-steps p { margin: 0; }
